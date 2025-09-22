@@ -3,6 +3,7 @@
 
 #include <sys/time.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 
 typedef struct  s_data
@@ -14,6 +15,15 @@ typedef struct  s_data
     int nb_meals;
 }               t_data;
 
+
+typedef struct  s_timer
+{
+    struct timeval start;
+    struct timeval current;
+    unsigned long long start_us;
+    unsigned long long current_us;
+    unsigned long long target_us;
+}               t_timer;
 
 // parsing
 int is_nbr(char *str);

@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 13:09:35 by midiagne          #+#    #+#             */
-/*   Updated: 2025/09/21 16:28:29 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/09/21 20:32:03 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,6 @@ int is_positive(char *str)
     return (1);
 }
 
-/* int main(int ac, char **av)
-{
-    printf("%d\n", is_positive(av[1]));
-    return (0);
-} */
-
 int *parse_args(int ac, char **args)
 {
     int i;
@@ -131,7 +125,7 @@ int *parse_args(int ac, char **args)
         }
         return (tab);
     }
-    return (NULL);
+    return (free (tab), NULL);
 }
 
 t_data  *fill_struct(int ac, char **av)

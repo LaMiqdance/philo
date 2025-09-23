@@ -2,7 +2,7 @@
 # define PHILO_H
 
 # include <pthread.h>
-# include <stdio.h>
+/* # include <stdio.h> */
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
@@ -28,7 +28,7 @@ typedef struct s_timer
 
 typedef struct s_philo
 {
-	int					philo_id;
+	int					id;
 	t_data				*glb_info;
 	unsigned long long	last_meal_time;
 }						t_philo;
@@ -39,6 +39,9 @@ int						is_positive(char *str);
 int						ft_atoi(const char *str);
 int						range_check(int i, int index);
 int						*parse_args(int ac, char **args);
+
+// time management
+unsigned long long		get_current_time_ms(void);
 
 // nap time management
 void					while_asleep(t_timer *timing);

@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 11:12:06 by midiagne          #+#    #+#             */
-/*   Updated: 2025/09/23 14:27:39 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/09/26 20:05:17 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 void	*philosopher_routine(void *arg)
 {
 	t_philo				*philo;
-	unsigned long long	last_meal_time;
 
 	philo = (t_philo *)arg;
-	last_meal_time = get_current_time_in_ms();
+	philo->last_meal_time = get_current_time_in_ms();
 	if (philo->id % 2 == 0)
 	{
 	}

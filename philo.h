@@ -41,7 +41,7 @@ int						range_check(int i, int index);
 int						*parse_args(int ac, char **args);
 
 // time management
-unsigned long long		get_current_time_ms(void);
+unsigned long long		get_current_time_mms(void);
 
 // nap time management
 void					while_asleep(t_timer *timing);

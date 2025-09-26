@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 16:31:44 by midiagne          #+#    #+#             */
-/*   Updated: 2025/09/26 20:05:45 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/09/26 20:09:12 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	precise_sleep(int ms)
 	t_timer	timer;
 
 	gettimeofday(&timer.start, NULL);
-	timer.start_us = get_current_time_in_ms() * 1000;
+	timer.start_us = timer.start.tv_sec * 1000000 + timer.start.tv_usec;
 	timer.target_us = 1000 * ms;
 	if (ms <= 10)
 		while_asleep(&timer);

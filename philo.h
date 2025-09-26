@@ -14,6 +14,7 @@ typedef struct s_data
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					nb_meals;
+	int					simu_stop;
 	pthread_mutex_t		*forks;
 }						t_data;
 
@@ -39,9 +40,10 @@ int						is_positive(char *str);
 int						ft_atoi(const char *str);
 int						range_check(int i, int index);
 int						*parse_args(int ac, char **args);
+t_data					*fill_struct(int ac, char **av);
 
 // time management
-unsigned long long		get_current_time_mms(void);
+unsigned long long		get_current_time_ms(void);
 
 // nap time management
 void					while_asleep(t_timer *timing);

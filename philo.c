@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 11:12:06 by midiagne          #+#    #+#             */
-/*   Updated: 2025/09/26 20:05:17 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/09/26 20:34:48 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,21 @@
 
 void	*philosopher_routine(void *arg)
 {
-	t_philo				*philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	philo->last_meal_time = get_current_time_in_ms();
+	philo->last_meal_time = get_current_time_ms();
 	if (philo->id % 2 == 0)
 	{
+		while (!philo->glb_info->simu_stop)
+		{
+			
+		}
 	}
 	else
 	{
 	}
+	return (philo);
 }
 
 int	main(int ac, char **av)
@@ -35,9 +40,9 @@ int	main(int ac, char **av)
 	data = fill_struct(ac, av);
 	if (!data)
 		return (-1);
-    thread_ids = malloc(sizeof(pthread_t) * data->nb_philo);
-    if (!thread_ids)
-        return (free(data), -1);
+	thread_ids = malloc(sizeof(pthread_t) * data->nb_philo);
+	if (!thread_ids)
+		return (free(data), -1);
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
 	if (!data->forks)
 		return (free(data), free(thread_ids), -1);

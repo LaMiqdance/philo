@@ -15,6 +15,7 @@ typedef struct s_data
 	int					time_to_sleep;
 	int					nb_meals;
 	int					simu_stop;
+	pthread_mutex_t		m_simu_stop;
 	pthread_mutex_t		*forks;
 }						t_data;
 

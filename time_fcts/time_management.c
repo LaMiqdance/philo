@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time_asleep.c                                      :+:      :+:    :+:   */
+/*   time_management.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 16:31:44 by midiagne          #+#    #+#             */
-/*   Updated: 2025/09/26 20:09:12 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/09/29 12:48:20 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	while_asleep(t_timer *timing)
 	}
 }
 
-void	precise_sleep(int ms)
+void	precise_timing(int ms)
 {
 	t_timer	timer;
 
@@ -59,7 +59,7 @@ void	test_precision(int ms, const char *description)
 
 	printf("Test: %s (%d ms)\n", description, ms);
 	start = get_time_microseconds();
-	precise_sleep(ms);
+	precise_timing(ms);
 	end = get_time_microseconds();
 	unsigned long long actual_time = (end - start) / 1000; // Convertir en ms
 	error = actual_time - ms;
@@ -81,7 +81,7 @@ int	main(void)
 	unsigned long long	total_end;
 	unsigned long long	total_time;
 
-	printf("=== TESTS DE PRÉCISION POUR PRECISE_SLEEP ===\n\n");
+	printf("=== TESTS DE PRÉCISION POUR precise_timing ===\n\n");
 	// Tests sur différentes durées
 	test_precision(5, "Très court (busy-wait direct)");
 	test_precision(10, "Seuil limite");
@@ -96,7 +96,7 @@ int	main(void)
 	{
 		printf("Appel %d... ", i + 1);
 		fflush(stdout);
-		precise_sleep(100);
+		precise_timing(100);
 		printf("OK\n");
 	}
 	total_end = get_time_microseconds();

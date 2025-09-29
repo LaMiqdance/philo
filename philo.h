@@ -48,6 +48,6 @@ unsigned long long		get_current_time_ms(void);
 
 // nap time management
 void					while_asleep(t_timer *timing);
-void					precise_sleep(int ms);
+void					precise_timing(int ms);
 
 #endif

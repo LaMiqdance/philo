@@ -32,6 +32,7 @@ typedef struct s_philo
 {
 	int					id;
 	t_data				*glb_info;
+	pthread_mutex_t		m_last_meal_time;
 	unsigned long long	last_meal_time;
 }						t_philo;
 

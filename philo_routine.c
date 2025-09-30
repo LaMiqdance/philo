@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 14:03:19 by midiagne          #+#    #+#             */
-/*   Updated: 2025/09/29 14:12:13 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/09/30 12:49:08 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,33 @@ static void	lock_fork(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(&philo->glb_info->forks[philo->id]);
-		pthread_mutex_lock(&philo->glb_info->forks[philo->id + 1
+		pthread_mutex_lock(&philo->glb_info->forks[philo->id - 1]);
+		pthread_mutex_lock(&philo->glb_info->forks[philo->id
 			% (philo->glb_info->nb_philo)]);
+		philo->last_meal_time = get_current_time_ms();
 	}
 	else
 	{
-		pthread_mutex_lock(&philo->glb_info->forks[philo->id + 1
+		pthread_mutex_lock(&philo->glb_info->forks[philo->id
 			% (philo->glb_info->nb_philo)]);
-		pthread_mutex_lock(&philo->glb_info->forks[philo->id]);
+		pthread_mutex_lock(&philo->glb_info->forks[philo->id - 1]);
+		philo->last_meal_time = get_current_time_ms();
 	}
 }
 static void	unlock_fork(t_philo *philo)
 {
-	philo->last_meal_time = get_current_time_ms();
 	precise_timing(philo->glb_info->time_to_eat);
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_unlock(&philo->glb_info->forks[philo->id]);
-		pthread_mutex_unlock(&philo->glb_info->forks[philo->id + 1
+		pthread_mutex_unlock(&philo->glb_info->forks[philo->id - 1]);
+		pthread_mutex_unlock(&philo->glb_info->forks[philo->id
 			% (philo->glb_info->nb_philo)]);
 	}
 	else
 	{
-		pthread_mutex_unlock(&philo->glb_info->forks[philo->id + 1
+		pthread_mutex_unlock(&philo->glb_info->forks[philo->id
 			% (philo->glb_info->nb_philo)]);
-		pthread_mutex_unlock(&philo->glb_info->forks[philo->id]);
+		pthread_mutex_unlock(&philo->glb_info->forks[philo->id - 1]);
 	}
 	precise_timing(philo->glb_info->time_to_sleep);
 }

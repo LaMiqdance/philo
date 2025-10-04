@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_philo.c                                       :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/04 00:50:14 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/04 01:19:01 by midiagne         ###   ########.fr       */
+/*   Created: 2025/10/04 03:17:10 by midiagne          #+#    #+#             */
+/*   Updated: 2025/10/04 04:36:50 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void    init_philo(t_philo **philo, t_data *data, int index)
+void    cleanup_philos(t_philo **philo, int index)
 {
-    t_philo *str;
+    int i;
 
-    str = malloc(sizeof(t_philo));
-    if (!str)
+    i = 0;
+    while (i < index)
     {
-        
+        pthread_mutex_destroy(&philo[i]->m_last_meal_time);
+        free(philo[i]);
+        i++;
     }
-    str = philo[index];
-    
+    free(philo);
 }
-    
+void    cleanup_mutex(pthread_mutex_t *mutex, int index)
+{
+    int i;
+
+    i = 0;
+    while (i < index)
+    {
+        pthread_mutex_destroy(&mutex[i]);
+        i++;
+    }
+    free(mutex);
+}
+

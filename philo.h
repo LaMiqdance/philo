@@ -36,6 +36,11 @@ typedef struct s_philo
 	unsigned long long	last_meal_time;
 }						t_philo;
 
+// init
+
+pthread_mutex_t			*init_forks(t_data *data);
+t_philo					**init_philo(t_data *data);
+
 // parsing
 int						is_nbr(char *str);
 int						is_positive(char *str);
@@ -51,5 +56,8 @@ unsigned long long		get_current_time_ms(void);
 void					while_asleep(t_timer *timing);
 void					precise_timing(int ms);
 
-#endifga.
-gc -
+// cleanup
+void					cleanup_philos(t_philo **philo, int index);
+void					cleanup_mutex(pthread_mutex_t *mutex, int index);
+
+#endif

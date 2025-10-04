@@ -51,4 +51,5 @@ unsigned long long		get_current_time_ms(void);
 void					while_asleep(t_timer *timing);
 void					precise_timing(int ms);
 
-#endif
+#endifga.
+gc -

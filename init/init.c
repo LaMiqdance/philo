@@ -6,11 +6,13 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 00:50:14 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/04 04:37:29 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/05 01:50:12 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+void	*init_threads();
 
 pthread_mutex_t	*init_forks(t_data *data)
 {
@@ -69,7 +71,7 @@ t_philo	**init_philo(t_data *data)
 	return (philo);
 }
 
-#include <stdio.h>
+/* #include <stdio.h> */
 
 /* int main(int ac, char **av)
 {

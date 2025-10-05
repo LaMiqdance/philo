@@ -6,13 +6,11 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 11:12:06 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/04 04:29:27 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/05 01:27:23 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-
 
 int	main(int ac, char **av)
 {
@@ -33,7 +31,7 @@ int	main(int ac, char **av)
 	i = 0;
 	pthread_mutex_init(&data->m_simu_stop, NULL);
 	data->simu_stop = 0;
- 	philo = init_philo(data);
+	philo = init_philo(data);
 	if (!philo)
 		return (free(data), free(thread_ids), free(data->forks), 1);
 	// creation des threads

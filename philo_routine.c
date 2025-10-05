@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 14:03:19 by midiagne          #+#    #+#             */
-/*   Updated: 2025/09/30 12:49:08 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/05 01:28:45 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	lock_fork(t_philo *philo)
 		philo->last_meal_time = get_current_time_ms();
 	}
 }
+
 static void	unlock_fork(t_philo *philo)
 {
 	precise_timing(philo->glb_info->time_to_eat);
@@ -46,6 +47,7 @@ static void	unlock_fork(t_philo *philo)
 	}
 	precise_timing(philo->glb_info->time_to_sleep);
 }
+
 int	fcts_summed_up(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->glb_info->m_simu_stop);

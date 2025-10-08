@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: midiagne <midiagne@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 01:26:50 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/05 01:26:53 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/09 00:11:21 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,22 @@ typedef struct s_philo
 	unsigned long long	last_meal_time;
 }						t_philo;
 
-// init
+// philo_routine
+void	lock_fork(t_philo *philo);
+void	lock_last_meal_time(t_philo *philo);
+void	unlock_fork(t_philo *philo);
+int		fcts_summed_up(t_philo *philo);
+void	*philosopher_routine(void *arg);
 
+// init
+int init_threads(pthread_t *threads_ids, t_philo **philo);
 pthread_mutex_t			*init_forks(t_data *data);
 t_philo					**init_philo(t_data *data);
 
 // parsing
 int						is_nbr(char *str);
 int						is_positive(char *str);
-int						ft_atoi(const char *str);
+int						ft_atoi (const char *str);
 int						range_check(int i, int index);
 int						*parse_args(int ac, char **args);
 t_data					*fill_struct(int ac, char **av);

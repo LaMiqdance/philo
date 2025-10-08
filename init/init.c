@@ -3,16 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: midiagne <midiagne@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 00:50:14 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/05 01:50:12 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/09 00:11:02 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	*init_threads();
+int init_threads(pthread_t *threads_ids, t_philo **philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < ((philo[0])->glb_info->nb_philo))
+	{
+		if ((pthread_create(&threads_ids[i], NULL, philosopher_routine, philo[i])) != 0)
+		{
+			pthread_mutex_lock(&philo[i]->glb_info->m_simu_stop);
+			philo[i]->glb_info->simu_stop = 1;
+			pthread_mutex_unlock(&philo[i]->glb_info->m_simu_stop);
+			while (i > 0)
+			{
+				pthread_join(threads_ids[i - 1], NULL);
+				i--;
+			}
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
 
 pthread_mutex_t	*init_forks(t_data *data)
 {
@@ -52,7 +74,7 @@ t_philo	**init_philo(t_data *data)
 		str = malloc(sizeof(t_philo));
 		if (!str)
 		{
-			cleanup(philo, i);
+			cleanup_philos(philo, i);
 			return (NULL);
 		}
 		philo[i] = str;
@@ -70,47 +92,101 @@ t_philo	**init_philo(t_data *data)
 	}
 	return (philo);
 }
+#include <stdio.h>
 
-/* #include <stdio.h> */
-
-/* int main(int ac, char **av)
+int main(int ac, char **av)
 {
-	t_data	*data;
-	t_philo	**philo;
-	int		i;
+    t_data *data;
+    pthread_t *thread_ids;
+    t_philo **philo;
+    int i;
 
-	// Parse les arguments
-	data = fill_struct(ac, av);
-	if (!data)
-	{
-		printf("Erreur: parsing echoue\n");
-		return (1);
-	}
-	// Teste ta fonction init_philo
-	philo = init_philo(data);
-	if (!philo)
-	{
-		printf("Erreur: init_philo echoue\n");
-		free(data);
-		return (1);
-	}
-	// Affiche les philosophes crees pour verifier
-	printf("=== Test init_philo ===\n");
-	printf("Nombre de philosophes: %d\n", data->nb_philo);
-	i = 0;
-	while (i < data->nb_philo)
-	{
-		printf("Philo %d:\n", i);
-		printf("  - ID: %d\n", philo[i]->id);
-		printf("  - glb_info pointe vers data: %s\n",
-				(philo[i]->glb_info == data) ? "OUI" : "NON");
-		printf("  - last_meal_time: %llu\n", philo[i]->last_meal_time);
-		i++;
-	}
-	// Nettoie la memoire
-	cleanup(philo, data->nb_philo);
-	free(data);
-	printf("Test termine avec succes!\n");
-	return (0);
+    // Parse et initialise les structures
+    data = fill_struct(ac, av);
+    if (!data)
+    {
+        printf("Erreur: parsing echoue\n");
+        return (1);
+    }
+
+    // Alloue le tableau des thread IDs
+    thread_ids = malloc(sizeof(pthread_t) * data->nb_philo);
+    if (!thread_ids)
+    {
+        printf("Erreur: allocation thread_ids\n");
+        free(data);
+        return (1);
+    }
+
+    // Initialise les fourchettes
+    data->forks = init_forks(data);
+    if (!data->forks)
+    {
+        printf("Erreur: init des fourchettes\n");
+        free(thread_ids);
+        free(data);
+        return (1);
+    }
+
+    // Initialise simu_stop
+    pthread_mutex_init(&data->m_simu_stop, NULL);
+    data->simu_stop = 0;
+
+    // Initialise les philosophes
+    philo = init_philo(data);
+    if (!philo)
+    {
+        printf("Erreur: init des philosophes\n");
+        cleanup_mutex(data->forks, data->nb_philo);
+        free(thread_ids);
+        free(data);
+        return (1);
+    }
+
+    printf("=== Test init_threads ===\n");
+    printf("Lancement de %d threads...\n", data->nb_philo);
+
+    // Teste ta fonction init_threads
+    if (init_threads(thread_ids, philo) != 1)
+    {
+        printf("Erreur: creation des threads echouee\n");
+        // Les threads créés avec succès ont déjà été nettoyés par init_threads
+        cleanup_philos(philo, data->nb_philo);
+        cleanup_mutex(data->forks, data->nb_philo);
+        free(thread_ids);
+        free(data);
+        return (1);
+    }
+
+    printf("Tous les threads créés avec succès!\n");
+    printf("Les philosophes mangent pendant 3 secondes...\n");
+
+    // Laisse tourner 3 secondes pour voir si ça marche
+    sleep(3);
+
+    // Arrête la simulation
+    printf("Arrêt de la simulation...\n");
+    pthread_mutex_lock(&data->m_simu_stop);
+    data->simu_stop = 1;
+    pthread_mutex_unlock(&data->m_simu_stop);
+
+    // Attend que tous les threads se terminent
+    i = 0;
+    while (i < data->nb_philo)
+    {
+        pthread_join(thread_ids[i], NULL);
+        i++;
+    }
+
+    printf("Tous les threads terminés.\n");
+
+    // Nettoie tout
+    cleanup_philos(philo, data->nb_philo);
+    cleanup_mutex(data->forks, data->nb_philo);
+    pthread_mutex_destroy(&data->m_simu_stop);
+    free(thread_ids);
+    free(data);
+
+    printf("Test terminé avec succès!\n");
+    return (0);
 }
- */

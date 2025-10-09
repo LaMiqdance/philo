@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: midiagne <midiagne@42student.fr>           +#+  +:+       +#+        */
+/*   By: midiagne <midiagne@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 01:26:50 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/09 00:11:21 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/09 18:06:28 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PHILO_H
 
 # include <pthread.h>
-/* # include <stdio.h> */
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
@@ -27,6 +27,7 @@ typedef struct s_data
 	int					time_to_sleep;
 	int					nb_meals;
 	int					simu_stop;
+	unsigned long long	start_time;
 	pthread_mutex_t		m_simu_stop;
 	pthread_mutex_t		*forks;
 }						t_data;

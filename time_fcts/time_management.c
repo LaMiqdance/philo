@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time_management.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
+/*   By: midiagne <midiagne@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 16:31:44 by midiagne          #+#    #+#             */
-/*   Updated: 2025/09/29 12:48:20 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/09 18:05:53 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ void	precise_timing(int ms)
 		usleep(ms * 750);
 		while_asleep(&timer);
 	}
+}
+
+void	time_print(t_philo *philo, char *str)
+{
+	
 }
 
 /* // Fonction utilitaire pour obtenir le temps en microsecondes

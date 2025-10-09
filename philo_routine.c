@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: midiagne <midiagne@42student.fr>           +#+  +:+       +#+        */
+/*   By: midiagne <midiagne@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 14:03:19 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/09 00:03:29 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/09 20:07:12 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	fcts_summed_up(t_philo *philo)
 	if (philo->glb_info->simu_stop == 1)
 	{
 		pthread_mutex_unlock(&philo->glb_info->m_simu_stop);
-		return (free(philo), 0);
+		return (0);
 	}
 	pthread_mutex_unlock(&philo->glb_info->m_simu_stop);
 	lock_fork(philo);
@@ -81,11 +81,11 @@ void	*philosopher_routine(void *arg)
 	{
 		flag = fcts_summed_up(philo);
 		if (flag == 0)
-			return (free(philo), NULL);
+			return (NULL);
 	}
-	return (free(philo), NULL);
+	return (NULL);
 }
-
+/* 
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -147,7 +147,7 @@ void cleanup_forks(t_data *data)
         i++;
     }
     free(data->forks);
-}
+} */
 
 /* int main(void)
 {

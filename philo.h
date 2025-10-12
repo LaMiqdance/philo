@@ -47,7 +47,7 @@ typedef struct s_philo
 {
 	int					id;
 	int					is_thinking;
-	int					has_taken_a_fork ;
+	int					has_taken_a_fork;
 	int					is_eating;
 	int					is_sleeping;
 	int					has_died;
@@ -65,7 +65,7 @@ int						*parse_args(int ac, char **args);
 t_data					*fill_struct(int ac, char **av);
 
 // init
-void					init_states(t_data *data);
+void					init_states(t_philo *philo);
 int						init_threads(pthread_t *threads_ids, t_philo **philo);
 pthread_mutex_t			*init_forks(t_data *data);
 t_philo					**init_philo(t_data *data);
@@ -76,7 +76,7 @@ unsigned long long		get_current_time_ms(void);
 // nap time management
 void					while_asleep(t_timer *timing);
 void					precise_timing(int ms);
-char					*print_management(t_data *data);
+char					*print_management(t_philo *philo);
 void					time_print(t_philo *philo);
 // philo_routine
 void					lock_fork(t_philo *philo);
@@ -84,7 +84,7 @@ void					lock_last_meal_time(t_philo *philo);
 void					unlock_fork(t_philo *philo);
 int						fcts_summed_up(t_philo *philo);
 void					*philosopher_routine(void *arg);
-void					mutex_print(philo);
+void					mutex_print(t_philo *philo);
 
 // cleanup
 void					cleanup_philos(t_philo **philo, int index);

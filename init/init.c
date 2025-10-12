@@ -13,12 +13,12 @@
 
 #include "../philo.h"
 
-void	init_states(t_data *data)
+void	init_states(t_philo *philo)
 {
-	data->is_thinking = 0;
-	data->has_taken_a_fork = 0;
-	data->is_eating = 0;
-	data->is_sleeping = 0;
+	philo->is_thinking = 0;
+	philo->has_taken_a_fork = 0;
+	philo->is_eating = 0;
+	philo->is_sleeping = 0;
 }
 
 int	init_threads(pthread_t *threads_ids, t_philo **philo)

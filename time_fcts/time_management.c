@@ -57,6 +57,8 @@ char	*print_management(t_philo *philo)
 		str = ft_strdup("is_sleeping");
 	else if (philo->is_thinking == 1)
 		str = ft_strdup("is_thinking");
+	else if (philo->has_died == 1)
+		str = ft_strdup("has_died");
 	if (!str)
 		return (NULL);
 	return (str);
@@ -73,7 +75,7 @@ void	time_print(t_philo *philo)
 	if (!str)
 		return ;
 	current_time = get_current_time_ms() - philo->glb_data->start_time;
-	printf("%lld, %d, %s", current_time, philo->id, str);
+	printf("%lld,' ' %d,' ' %s\n", current_time, philo->id, str);
 	free(str);
 }
 

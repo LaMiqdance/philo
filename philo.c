@@ -3,7 +3,8 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: midiagne <midiagne@student.42.fr>           +#+  +:+       +#+        */
+/*   By: midiagne <midiagne@student.42.fr>           +#+  +:+
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 11:12:06 by midiagne          #+#    #+#             */
 /*   Updated: 2025/10/09 00:04:05 by midiagne         ###   ########.fr       */
@@ -12,7 +13,7 @@
 
 #include "philo.h"
 
-/* int	main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_data		*data;
 	pthread_t	*thread_ids;
@@ -34,6 +35,8 @@
 	philo = init_philo(data);
 	if (!philo)
 		return (free(data), free(thread_ids), free(data->forks), 1);
+	init_states(data);
 	init_threads(thread_ids, philo);
-	
-} */
+	pthread_mutex_init(&data->m_print, NULL);
+	data->start_time = get_current_time_ms();
+}

@@ -3,7 +3,8 @@
 /*                                                        :::      ::::::::   */
 /*   time_management.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: midiagne <midiagne@student.42.fr>           +#+  +:+       +#+        */
+/*   By: midiagne <midiagne@student.42.fr>           +#+  +:+
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 16:31:44 by midiagne          #+#    #+#             */
 /*   Updated: 2025/10/09 18:05:53 by midiagne         ###   ########.fr       */
@@ -43,10 +44,38 @@ void	precise_timing(int ms)
 	}
 }
 
-void	time_print(t_philo *philo, char *str)
+char	*print_management(t_data *data)
 {
-	
+	char	*str;
+
+	str = NULL;
+	if (data->has_taken_a_fork == 1 && data->is_eating == 0)
+		str = ft_strdup("has_taken_a_fork");
+	else if (data->is_eating == 1)
+		str = ft_strdup("is_eating");
+	else if (data->is_eating == 1)
+		str = ft_strdup("is_eating");
+	else if (data->is_eating == 1)
+		str = ft_strdup("is_eating");
+	if (!str)
+		return (NULL);
+	return (str);
 }
+
+void	time_print(t_philo *philo)
+{
+	unsigned long long	time;
+	unsigned long long	current_time;
+	char				*str;
+
+	time = philo->glb_data->start_time;
+	str = print_management(philo->glb_data);
+	if (!str)
+	return ;
+	current_time = get_current_time_ms() - philo->glb_data->start_time;
+	printf("%lld, %d, %s", current_time, philo->id, str);
+}
+
 
 /* // Fonction utilitaire pour obtenir le temps en microsecondes
 unsigned long long	get_time_microseconds(void)

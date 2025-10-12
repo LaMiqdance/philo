@@ -69,7 +69,7 @@ void	time_print(t_philo *philo)
 	char				*str;
 
 	time = philo->glb_data->start_time;
-	str = print_management(philo->glb_data);
+	str = print_management(philo);
 	if (!str)
 		return ;
 	current_time = get_current_time_ms() - philo->glb_data->start_time;

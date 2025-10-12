@@ -68,6 +68,9 @@ void	unlock_fork(t_philo *philo)
 	philo->is_sleeping = 1;
 	mutex_print(philo);
 	precise_timing(philo->glb_data->time_to_sleep);
+	philo->is_sleeping = 0;
+	philo->is_thinking = 1;
+	mutex_print(philo);
 }
 
 int	fcts_summed_up(t_philo *philo)

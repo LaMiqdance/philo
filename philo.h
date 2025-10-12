@@ -28,11 +28,6 @@ typedef struct s_data
 	int					time_to_sleep;
 	int					nb_meals;
 	int					simu_stop;
-	int					is_thinking;
-	int					has_taken_a_fork;
-	int					is_eating;
-	int					is_sleeping;
-	int					has_died;
 	unsigned long long	start_time;
 	pthread_mutex_t		m_simu_stop;
 	pthread_mutex_t		m_print;
@@ -51,6 +46,11 @@ typedef struct s_timer
 typedef struct s_philo
 {
 	int					id;
+	int					is_thinking;
+	int					has_taken_a_fork ;
+	int					is_eating;
+	int					is_sleeping;
+	int					has_died;
 	t_data				*glb_data;
 	pthread_mutex_t		m_last_meal_time;
 	unsigned long long	last_meal_time;

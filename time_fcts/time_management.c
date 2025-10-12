@@ -44,18 +44,18 @@ void	precise_timing(int ms)
 	}
 }
 
-char	*print_management(t_data *data)
+char	*print_management(t_philo *philo)
 {
 	char	*str;
 
 	str = NULL;
-	if (data->has_taken_a_fork == 1 && data->is_eating == 0)
+	if (philo->has_taken_a_fork == 1 && philo->is_eating == 0)
 		str = ft_strdup("has_taken_a_fork");
-	else if (data->is_eating == 1)
+	else if (philo->is_eating == 1)
 		str = ft_strdup("is_eating");
-	else if (data->is_eating == 1)
+	else if (philo->is_eating == 1)
 		str = ft_strdup("is_eating");
-	else if (data->is_eating == 1)
+	else if (philo->is_eating == 1)
 		str = ft_strdup("is_eating");
 	if (!str)
 		return (NULL);

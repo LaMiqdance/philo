@@ -12,6 +12,16 @@
 
 #include "../philo.h"
 
+void	final_cleanup(t_philo **philo, t_data *data, pthread_t *thread_ids)
+{
+	cleanup_philos(philo, data->nb_philo);
+	free(data->forks);
+	free(thread_ids);
+	pthread_mutex_destroy(&data->m_simu_stop);
+	pthread_mutex_destroy(&data->m_print);
+	free(data);
+}
+
 void	cleanup_philos(t_philo **philo, int index)
 {
 	int	i;

@@ -13,12 +13,22 @@
 
 #include "../philo.h"
 
+int init_data(t_data *data)
+{
+    pthread_mutex_init(&data->m_simu_stop, NULL);
+    pthread_mutex_init(&data->m_print, NULL);
+    data->simu_stop = 0;
+    data->start_time = get_current_time_ms();
+    return (1);
+}
+
 void	init_states(t_philo *philo)
 {
 	philo->is_thinking = 0;
 	philo->has_taken_a_fork = 0;
 	philo->is_eating = 0;
 	philo->is_sleeping = 0;
+	philo->has_died = 0;
 }
 
 int	init_threads(pthread_t *threads_ids, t_philo **philo)

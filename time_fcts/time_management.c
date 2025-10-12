@@ -66,16 +66,14 @@ char	*print_management(t_philo *philo)
 
 void	time_print(t_philo *philo)
 {
-	unsigned long long	time;
 	unsigned long long	current_time;
 	char				*str;
 
-	time = philo->glb_data->start_time;
 	str = print_management(philo);
 	if (!str)
 		return ;
 	current_time = get_current_time_ms() - philo->glb_data->start_time;
-	printf("%lld,' ' %d,' ' %s\n", current_time, philo->id, str);
+	printf("%lld, %d, %s\n", current_time, philo->id, str);
 	free(str);
 }
 

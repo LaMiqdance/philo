@@ -11,7 +11,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 void	lock_last_meal_time(t_philo *philo)
 {
@@ -71,6 +71,8 @@ void	unlock_fork(t_philo *philo)
 	philo->is_sleeping = 0;
 	philo->is_thinking = 1;
 	mutex_print(philo);
+	if (philo->glb_data->time_to_think > 0)
+    precise_timing(philo->glb_data->time_to_think);
 }
 
 int	fcts_summed_up(t_philo *philo)

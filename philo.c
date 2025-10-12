@@ -13,12 +13,25 @@
 
 #include "philo.h"
 
+void run_simulation(pthread_t *thread_ids, pthread_t monitor_thread, int nb_philo)
+{
+    int i;
+    
+    pthread_join(monitor_thread, NULL);
+    i = 0;
+    while (i < nb_philo)
+    {
+        pthread_join(thread_ids[i], NULL);
+        i++;
+    }
+}
+
 int	main(int ac, char **av)
 {
 	t_data		*data;
 	pthread_t	*thread_ids;
+	pthread_t	monitor_thread;
 	t_philo		**philo;
-	int			i;
 
 	data = fill_struct(ac, av);
 	if (!data)
@@ -29,14 +42,15 @@ int	main(int ac, char **av)
 	data->forks = init_forks(data);
 	if (!data->forks)
 		return (free(data), free(thread_ids), 1);
-	i = 0;
-	pthread_mutex_init(&data->m_simu_stop, NULL);
-	data->simu_stop = 0;
+	init_data(data);
 	philo = init_philo(data);
 	if (!philo)
 		return (free(data), free(thread_ids), free(data->forks), 1);
-	init_states(data);
-	pthread_mutex_init(&data->m_print, NULL);
-	data->start_time = get_current_time_ms();
-	init_threads(thread_ids, philo);
+	init_states(*philo);
+	if (init_threads(thread_ids, philo) == 0)
+		return (final_cleanup(philo, data, thread_ids), 1);
+	pthread_create(&monitor_thread, NULL, monitor_routine, philo);
+	run_simulation(thread_ids, monitor_thread, data->nb_philo);
+	final_cleanup(philo, data, thread_ids);
+	return (0);
 }

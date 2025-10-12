@@ -36,7 +36,7 @@ int	main(int ac, char **av)
 	if (!philo)
 		return (free(data), free(thread_ids), free(data->forks), 1);
 	init_states(data);
-	init_threads(thread_ids, philo);
 	pthread_mutex_init(&data->m_print, NULL);
 	data->start_time = get_current_time_ms();
+	init_threads(thread_ids, philo);
 }

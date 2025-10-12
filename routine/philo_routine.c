@@ -29,6 +29,9 @@ void	lock_fork(t_philo *philo)
 		mutex_print(philo);
 		pthread_mutex_lock(&philo->glb_data->forks[philo->id
 			% (philo->glb_data->nb_philo)]);
+		philo->has_taken_a_fork = 1;
+		mutex_print(philo);
+
 	}
 	else
 	{
@@ -37,6 +40,8 @@ void	lock_fork(t_philo *philo)
 		philo->has_taken_a_fork = 1;
 		mutex_print(philo);
 		pthread_mutex_lock(&philo->glb_data->forks[philo->id - 1]);
+		philo->has_taken_a_fork = 1;
+		mutex_print(philo);
 	}
 	philo->is_thinking = 0;
 	philo->is_eating = 1;

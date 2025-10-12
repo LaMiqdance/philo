@@ -53,10 +53,10 @@ char	*print_management(t_philo *philo)
 		str = ft_strdup("has_taken_a_fork");
 	else if (philo->is_eating == 1)
 		str = ft_strdup("is_eating");
-	else if (philo->is_eating == 1)
-		str = ft_strdup("is_eating");
-	else if (philo->is_eating == 1)
-		str = ft_strdup("is_eating");
+	else if (philo->is_sleeping == 1)
+		str = ft_strdup("is_sleeping");
+	else if (philo->is_thinking == 1)
+		str = ft_strdup("is_thinking");
 	if (!str)
 		return (NULL);
 	return (str);
@@ -71,9 +71,10 @@ void	time_print(t_philo *philo)
 	time = philo->glb_data->start_time;
 	str = print_management(philo->glb_data);
 	if (!str)
-	return ;
+		return ;
 	current_time = get_current_time_ms() - philo->glb_data->start_time;
 	printf("%lld, %d, %s", current_time, philo->id, str);
+	free(str);
 }
 
 

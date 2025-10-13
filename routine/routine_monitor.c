@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:06:26 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/13 19:49:51 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/13 22:13:11 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,14 @@
 int	check_meals_eaten(t_philo **philo, int nb_philo)
 {
 	int	i;
-	int	count;
 
 	i = 0;
-	count = 0;
 	if ((*philo)->glb_data->number_of_times_each_philosopher_must_eat == 0)
 		return (0);
 	while (i < nb_philo)
 	{
 		if (philo[i]->meals_eaten == philo[i]->glb_data->number_of_times_each_philosopher_must_eat)
-		{
-			count++;
 			i++;
-		}
 		else
 			return (0);
 	}
@@ -45,7 +40,7 @@ int	check_death(t_philo **philo, int nb_philo)
 	{
 		pthread_mutex_lock(&philo[i]->m_last_meal_time);
 		time_since_meal = get_current_time_ms() - philo[i]->last_meal_time;
-		if (time_since_meal > philo[i]->glb_data->time_to_die)
+		if (time_since_meal > philo[i]->glb_data->time_to_die && philo[i]->is_eating == 0)
 		{
 			pthread_mutex_unlock(&philo[i]->m_last_meal_time);
 			philo[i]->glb_data->simu_stop = 1;
@@ -75,6 +70,6 @@ void	*monitor_routine(void *arg)
 			return (NULL);
 		}
 		pthread_mutex_unlock(&(*philos)->glb_data->m_simu_stop);
-		precise_timing((*philos)->glb_data->time_to_die / 5);
+		precise_timing(3);
 	}
 }

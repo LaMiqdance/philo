@@ -41,3 +41,9 @@ test 10 // mort 419, 1 has died
 
 # Test 13 : Beaucoup de repas
 ./philo 3 800 200 200 50
+
+Erreurs de norme :
+init/init.c/init_philo
+routine/philo_routine.c/unlock_fork
+parsing.c/parse_args
+

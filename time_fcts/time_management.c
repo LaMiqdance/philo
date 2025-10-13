@@ -49,7 +49,9 @@ char	*print_management(t_philo *philo)
 	char	*str;
 
 	str = NULL;
-	if (philo->has_taken_a_fork == 1 && philo->is_eating == 0)
+	if (philo->has_died == 1)
+		str = ft_strdup("has_died");
+	else if (philo->has_taken_a_fork == 1 && philo->is_eating == 0)
 		str = ft_strdup("has_taken_a_fork");
 	else if (philo->is_eating == 1)
 		str = ft_strdup("is_eating");
@@ -57,8 +59,6 @@ char	*print_management(t_philo *philo)
 		str = ft_strdup("is_sleeping");
 	else if (philo->is_thinking == 1)
 		str = ft_strdup("is_thinking");
-	else if (philo->has_died == 1)
-		str = ft_strdup("has_died");
 	if (!str)
 		return (NULL);
 	return (str);

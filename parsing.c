@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 13:09:35 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/13 01:58:55 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/13 18:13:27 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,10 @@ t_data	*fill_struct(int ac, char **av)
 	parsed->time_to_die = tab[1];
 	parsed->time_to_eat = tab[2];
 	parsed->time_to_sleep = tab[3];
-	parsed->time_to_think = (parsed->time_to_die - parsed->time_to_eat 
-    - parsed->time_to_sleep) / 2;
-	if (parsed->time_to_think < 0)
-    	parsed->time_to_think = 0;
+	parsed->time_to_think = (parsed->time_to_die - parsed->time_to_eat
+			- parsed->time_to_sleep) / 2;
+	if (parsed->time_to_think <= 0)
+		parsed->time_to_think = 0;
 	if (ac == 6)
 		parsed->nb_meals = tab[4];
 	else

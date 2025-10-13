@@ -50,15 +50,15 @@ char	*print_management(t_philo *philo)
 
 	str = NULL;
 	if (philo->has_died == 1)
-		str = ft_strdup("has_died");
+		str = ft_strdup("has died");
 	else if (philo->has_taken_a_fork == 1 && philo->is_eating == 0)
-		str = ft_strdup("has_taken_a_fork");
+		str = ft_strdup("has taken a fork");
 	else if (philo->is_eating == 1)
-		str = ft_strdup("is_eating");
+		str = ft_strdup("is eating");
 	else if (philo->is_sleeping == 1)
-		str = ft_strdup("is_sleeping");
+		str = ft_strdup("is sleeping");
 	else if (philo->is_thinking == 1)
-		str = ft_strdup("is_thinking");
+		str = ft_strdup("is thinking");
 	if (!str)
 		return (NULL);
 	return (str);
@@ -76,7 +76,6 @@ void	time_print(t_philo *philo)
 	printf("%lld, %d, %s\n", current_time, philo->id, str);
 	free(str);
 }
-
 
 /* // Fonction utilitaire pour obtenir le temps en microsecondes
 unsigned long long	get_time_microseconds(void)

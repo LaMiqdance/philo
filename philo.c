@@ -13,17 +13,18 @@
 
 #include "philo.h"
 
-void run_simulation(pthread_t *thread_ids, pthread_t monitor_thread, int nb_philo)
+void	run_simulation(pthread_t *thread_ids, pthread_t monitor_thread,
+		int nb_philo)
 {
-    int i;
-    
-    pthread_join(monitor_thread, NULL);
-    i = 0;
-    while (i < nb_philo)
-    {
-        pthread_join(thread_ids[i], NULL);
-        i++;
-    }
+	int	i;
+
+	pthread_join(monitor_thread, NULL);
+	i = 0;
+	while (i < nb_philo)
+	{
+		pthread_join(thread_ids[i], NULL);
+		i++;
+	}
 }
 
 int	main(int ac, char **av)

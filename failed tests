@@ -1,0 +1,43 @@
+test 5 // pas d'affichage
+test 6 // pas d'affichage
+test 9 // mort 72, 1, has died
+test 10 // mort 419, 1 has died
+
+# Test 1 : Configuration standard // bon
+./philo 5 800 200 200
+
+# Test 2 : Beaucoup de philosophes // bon
+./philo 200 800 200 200
+
+# Test 3 : Avec marges confortables // bon
+./philo 4 410 200 200
+
+# Test 4 : Mort rapide // bon
+./philo 4 310 200 100
+
+# Test 5 : Mort très rapide // fail
+./philo 4 200 150 50
+
+# Test 6 : Temps limite // fail
+./philo 5 150 100 50
+
+# Test 7 : Un seul philosophe (doit mourir) // bon
+./philo 1 800 200 200
+
+# Test 8 : Deux philosophes // bon
+./philo 2 800 200 200
+
+# Test 9 : Temps très courts (minimum autorisé) // mort, fail ?
+./philo 4 60 60 60
+
+# Test 10 : Maximum de philosophes // mort, fail
+./philo 200 410 200 200
+
+# Test 11 : 7 repas par philosophe // 
+./philo 5 800 200 200 7
+
+# Test 12 : 1 seul repas
+./philo 4 410 200 200 1
+
+# Test 13 : Beaucoup de repas
+./philo 3 800 200 200 50

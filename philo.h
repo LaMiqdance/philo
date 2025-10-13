@@ -66,7 +66,7 @@ int						*parse_args(int ac, char **args);
 t_data					*fill_struct(int ac, char **av);
 
 // init
-int 					init_data(t_data *data);
+int						init_data(t_data *data);
 void					init_states(t_philo *philo);
 int						init_threads(pthread_t *threads_ids, t_philo **philo);
 pthread_mutex_t			*init_forks(t_data *data);
@@ -82,18 +82,26 @@ char					*print_management(t_philo *philo);
 void					time_print(t_philo *philo);
 // philo_routine
 void					lock_fork(t_philo *philo);
-void					lock_last_meal_time(t_philo *philo);
 void					unlock_fork(t_philo *philo);
 int						fcts_summed_up(t_philo *philo);
 void					*philosopher_routine(void *arg);
+int						state_check(t_philo *philo);
+// routine2
+t_philo					*only_philo(t_philo *philo);
 void					mutex_print(t_philo *philo);
-int    					check_death(t_philo **philo, int nb_philo);
-void    				*monitor_routine(void *arg);
+void					my_guy_is_eating(t_philo *philo);
+void					take_fork(t_philo *philo, int fork_index);
+void					lock_last_meal_time(t_philo *philo);
+
+// routine_monitor
+int						check_death(t_philo **philo, int nb_philo);
+void					*monitor_routine(void *arg);
 
 // cleanup
 void					cleanup_philos(t_philo **philo, int index);
 void					cleanup_mutex(pthread_mutex_t *mutex, int index);
-void					final_cleanup(t_philo **philo, t_data *data, pthread_t *thread_ids);
+void					final_cleanup(t_philo **philo, t_data *data,
+							pthread_t *thread_ids);
 
 // utils
 int						ft_strlen(char *str);

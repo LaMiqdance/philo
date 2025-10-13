@@ -13,32 +13,21 @@
 
 #include "../philo.h"
 
-void	lock_last_meal_time(t_philo *philo)
+int	state_check(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->m_last_meal_time);
-	philo->last_meal_time = get_current_time_ms();
-	pthread_mutex_unlock(&philo->m_last_meal_time);
-}
-
-void	philo_death_check(t_philo *philo)
-{
-	if (!philo->has_died)
+	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
+	if (!philo->has_died && philo->glb_data->simu_stop == 0)
 		mutex_print(philo);
+	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
+	{
+		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
+		return (0);
+	}
+	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
+	return (1);
 }
 
-void	my_guy_is_eating(t_philo *philo)
-{
-	philo->is_eating = 1;
-	mutex_print(philo);
-	lock_last_meal_time(philo);
-	precise_timing(philo->glb_data->time_to_eat);
-}
-void take_fork(t_philo *philo, int fork_index)
-{
-	pthread_mutex_lock(&philo->glb_data->forks[fork_index]);
-	philo->has_taken_a_fork = 1;
-	mutex_print(philo);
-}
+void	choose_fork();
 
 void	lock_fork(t_philo *philo)
 {
@@ -52,12 +41,38 @@ void	lock_fork(t_philo *philo)
 		take_fork(philo, philo->id % philo->glb_data->nb_philo);
 		take_fork(philo, philo->id - 1);
 	}
+	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
+	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
+	{
+		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
+		return ;
+	}
+	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 	philo->is_thinking = 0;
 	my_guy_is_eating(philo);
 }
 
 void	unlock_fork(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
+	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
+	{
+		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
+		if (philo->id % 2 == 0)
+		{
+			pthread_mutex_unlock(&philo->glb_data->forks[philo->id - 1]);
+			pthread_mutex_unlock(&philo->glb_data->forks[philo->id
+				% (philo->glb_data->nb_philo)]);
+		}
+		else
+		{
+			pthread_mutex_unlock(&philo->glb_data->forks[philo->id
+				% (philo->glb_data->nb_philo)]);
+			pthread_mutex_unlock(&philo->glb_data->forks[philo->id - 1]);
+		}
+		return ;
+	}
+	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_unlock(&philo->glb_data->forks[philo->id - 1]);
@@ -73,13 +88,15 @@ void	unlock_fork(t_philo *philo)
 	philo->is_eating = 0;
 	philo->has_taken_a_fork = 0;
 	philo->is_sleeping = 1;
-	philo_death_check(philo);
+	if (!state_check(philo))
+		return ;
 	precise_timing(philo->glb_data->time_to_sleep);
 	philo->is_sleeping = 0;
 	philo->is_thinking = 1;
-	philo_death_check(philo);
+	if (!state_check(philo))
+		return ;
 	if (philo->glb_data->time_to_think > 0)
-    	precise_timing(philo->glb_data->time_to_think);
+		precise_timing(philo->glb_data->time_to_think);
 }
 
 int	fcts_summed_up(t_philo *philo)
@@ -103,6 +120,9 @@ void	*philosopher_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	philo->last_meal_time = get_current_time_ms();
+	philo = only_philo(philo);
+	if (!philo)
+		return (NULL);
 	flag = 1;
 	while (1)
 	{

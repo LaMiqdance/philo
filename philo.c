@@ -46,7 +46,6 @@ int	main(int ac, char **av)
 	philo = init_philo(data);
 	if (!philo)
 		return (free(data), free(thread_ids), free(data->forks), 1);
-	init_states(*philo);
 	if (init_threads(thread_ids, philo) == 0)
 		return (final_cleanup(philo, data, thread_ids), 1);
 	pthread_create(&monitor_thread, NULL, monitor_routine, philo);

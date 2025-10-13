@@ -22,13 +22,14 @@ int init_data(t_data *data)
     return (1);
 }
 
-void	init_states(t_philo *philo)
+void init_states(t_philo *philo)
 {
-	philo->is_thinking = 0;
-	philo->has_taken_a_fork = 0;
-	philo->is_eating = 0;
-	philo->is_sleeping = 0;
-	philo->has_died = 0;
+    printf("DEBUG: Initializing states for philo %d\n", philo->id);  // 👈 Ajoute
+    philo->is_thinking = 0;
+    philo->has_taken_a_fork = 0;
+    philo->is_eating = 0;
+    philo->is_sleeping = 0;
+    philo->has_died = 0;
 }
 
 int	init_threads(pthread_t *threads_ids, t_philo **philo)
@@ -101,6 +102,7 @@ t_philo	**init_philo(t_data *data)
 		philo[i]->id = i + 1;
 		philo[i]->glb_data = data;
 		philo[i]->last_meal_time = get_current_time_ms();
+		init_states(philo[i]);
 		r = pthread_mutex_init(&philo[i]->m_last_meal_time, NULL);
 		if (r != 0)
 		{

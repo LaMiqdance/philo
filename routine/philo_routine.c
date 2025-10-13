@@ -72,7 +72,7 @@ void	unlock_fork(t_philo *philo)
 	philo->is_thinking = 1;
 	mutex_print(philo);
 	if (philo->glb_data->time_to_think > 0)
-    precise_timing(philo->glb_data->time_to_think);
+    	precise_timing(philo->glb_data->time_to_think);
 }
 
 int	fcts_summed_up(t_philo *philo)

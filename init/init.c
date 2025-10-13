@@ -29,6 +29,7 @@ void	init_states(t_philo *philo)
 	philo->is_eating = 0;
 	philo->is_sleeping = 0;
 	philo->has_died = 0;
+	philo->meals_eaten = 0;
 }
 
 int	init_threads(pthread_t *threads_ids, t_philo **philo)

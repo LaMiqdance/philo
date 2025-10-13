@@ -26,7 +26,7 @@ typedef struct s_data
 	unsigned long long	time_to_die;
 	unsigned long long	time_to_eat;
 	unsigned long long	time_to_sleep;
-	unsigned long long	nb_meals;
+	unsigned long long	number_of_times_each_philosopher_must_eat;
 	unsigned long long	time_to_think;
 	int					simu_stop;
 	unsigned long long	start_time;
@@ -52,6 +52,7 @@ typedef struct s_philo
 	int					is_eating;
 	int					is_sleeping;
 	int					has_died;
+	unsigned long long	meals_eaten;
 	t_data				*glb_data;
 	pthread_mutex_t		m_last_meal_time;
 	unsigned long long	last_meal_time;
@@ -95,6 +96,7 @@ void					lock_last_meal_time(t_philo *philo);
 
 // routine_monitor
 int						check_death(t_philo **philo, int nb_philo);
+int						check_meals_eaten(t_philo **philo, int nb_philo);
 void					*monitor_routine(void *arg);
 
 // cleanup

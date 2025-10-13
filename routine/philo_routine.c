@@ -27,8 +27,6 @@ int	state_check(t_philo *philo)
 	return (1);
 }
 
-void	choose_fork();
-
 void	lock_fork(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
@@ -119,6 +117,7 @@ void	*philosopher_routine(void *arg)
 	int		flag;
 
 	philo = (t_philo *)arg;
+	printf("philo %d starting\n", philo->id);
 	philo->last_meal_time = get_current_time_ms();
 	philo = only_philo(philo);
 	if (!philo)

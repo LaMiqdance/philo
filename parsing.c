@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 13:09:35 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/13 18:13:27 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/13 19:33:15 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	range_check(int i, int index)
 	}
 	else if (index > 0 && index <= 3)
 	{
-		if (i < 60 || i > 2147483647)
+		if (i < 1 || i > 2147483647)
 			return (0);
 		return (1);
 	}
@@ -146,9 +146,9 @@ t_data	*fill_struct(int ac, char **av)
 	if (parsed->time_to_think <= 0)
 		parsed->time_to_think = 0;
 	if (ac == 6)
-		parsed->nb_meals = tab[4];
+		parsed->number_of_times_each_philosopher_must_eat = tab[4];
 	else
-		parsed->nb_meals = -1;
+		parsed->number_of_times_each_philosopher_must_eat = 0;
 	return (free(tab), parsed);
 }
 
@@ -175,10 +175,10 @@ t_data	*fill_struct(int ac, char **av)
 	printf("   - Time to die: %d ms\n", data->time_to_die);
 	printf("   - Time to eat: %d ms\n", data->time_to_eat);
 	printf("   - Time to sleep: %d ms\n", data->time_to_sleep);
-	if (data->nb_meals == -1)
+	if (data->number_of_times_each_philosopher_must_eat == -1)
 		printf("   - Nombre de repas: illimité\n");
 	else
-		printf("   - Nombre de repas: %d\n", data->nb_meals);
+		printf("   - Nombre de repas: %d\n", data->number_of_times_each_philosopher_must_eat);
 }
 
 void	test_case(char *description, int argc, char **argv)

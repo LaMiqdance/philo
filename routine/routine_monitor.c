@@ -1,16 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_death.c                                      :+:      :+:    :+:   */
+/*   routine_monitor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:06:26 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/13 12:55:37 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/13 19:49:51 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+int	check_meals_eaten(t_philo **philo, int nb_philo)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	if ((*philo)->glb_data->number_of_times_each_philosopher_must_eat == 0)
+		return (0);
+	while (i < nb_philo)
+	{
+		if (philo[i]->meals_eaten == philo[i]->glb_data->number_of_times_each_philosopher_must_eat)
+		{
+			count++;
+			i++;
+		}
+		else
+			return (0);
+	}
+	(*philo)->glb_data->simu_stop = 1;
+	return (1);
+}
 
 int	check_death(t_philo **philo, int nb_philo)
 {
@@ -41,13 +64,14 @@ void	*monitor_routine(void *arg)
 	t_philo	**philos;
 
 	philos = (t_philo **)arg;
+	// printf("monitor starting \n");
 	while (1)
 	{
 		pthread_mutex_lock(&(*philos)->glb_data->m_simu_stop);
-		if (check_death(philos, (*philos)->glb_data->nb_philo) == 1)
+		if (check_death(philos, (*philos)->glb_data->nb_philo) == 1
+			|| check_meals_eaten(philos, (*philos)->glb_data->nb_philo) == 1)
 		{
 			pthread_mutex_unlock(&(*philos)->glb_data->m_simu_stop);
-			// nettoyer
 			return (NULL);
 		}
 		pthread_mutex_unlock(&(*philos)->glb_data->m_simu_stop);

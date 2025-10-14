@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:33:13 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/14 14:25:15 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/14 19:59:09 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	mutex_print(t_philo *philo)
 
 void	my_guy_is_eating(t_philo *philo)
 {
-	philo->is_eating = 1;
+	lock_state(philo, philo->is_eating, 1);
 	mutex_print(philo);
 	lock_last_meal_time(philo);
 	precise_timing(philo->glb_data->time_to_eat);

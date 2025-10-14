@@ -48,3 +48,5 @@ routine/philo_routine.c/unlock_fork
 parsing.c/parse_args
 
 Forme args : ./philo time_to_die   time_to_eat   time_to_sleep   nb_meals
+
+reste a proteger : eating, took_a_fork, died

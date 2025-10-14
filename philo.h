@@ -52,6 +52,7 @@ typedef struct s_philo
 	int					is_eating;
 	int					is_sleeping;
 	int					has_died;
+	pthread_mutex_t		m_state;
 	unsigned long long	meals_eaten;
 	t_data				*glb_data;
 	pthread_mutex_t		m_last_meal_time;
@@ -84,20 +85,28 @@ void					precise_timing(int ms);
 char					*print_management(t_philo *philo);
 void					time_print(t_philo *philo);
 // philo_routine
-void					lock_fork(t_philo *philo);
+int						lock_fork(t_philo *philo);
 void					unlock_fork(t_philo *philo);
 int						fcts_summed_up(t_philo *philo);
 void					*philosopher_routine(void *arg);
+
+// unlock_utils
 int						state_check(t_philo *philo);
+int						fork_taken_error(t_philo *philo, int first, int second);
+int						check_forks_succesfully_taken(t_philo *philo);
+
 // routine2
 t_philo					*only_philo(t_philo *philo);
 void					my_guy_is_eating(t_philo *philo);
 
 // routine_utils
 void					lock_last_meal_time(t_philo *philo);
-void					take_fork(t_philo *philo, int fork_index);
+int						take_fork(t_philo *philo, int fork_index);
 void					mutex_print(t_philo *philo);
 void					unlock_which_first(t_philo *philo);
+void					set_sleeping_state(t_philo *philo);
+void					set_thinking_state(t_philo *philo);
+void					lock_state(t_philo *philo, int state, int value);
 
 // routine_monitor
 int						check_death(t_philo **philo, int nb_philo);
@@ -105,7 +114,7 @@ int						check_meals_eaten(t_philo **philo, int nb_philo);
 void					*monitor_routine(void *arg);
 
 // cleanup
-void					cleanup_philos(t_philo **philo, int index);
+void					cleanup_philos(t_philo **philo, int index, int mutex);
 void					cleanup_mutex(pthread_mutex_t *mutex, int index);
 void					final_cleanup(t_philo **philo, t_data *data,
 							pthread_t *thread_ids);

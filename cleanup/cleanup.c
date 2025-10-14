@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:10:36 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/14 11:10:42 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/14 19:39:20 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	final_cleanup(t_philo **philo, t_data *data, pthread_t *thread_ids)
 {
-	cleanup_philos(philo, data->nb_philo);
+	cleanup_philos(philo, data->nb_philo, 0);
+	cleanup_philos(philo, data->nb_philo, 1);
 	free(data->forks);
 	free(thread_ids);
 	pthread_mutex_destroy(&data->m_simu_stop);
@@ -22,15 +23,19 @@ void	final_cleanup(t_philo **philo, t_data *data, pthread_t *thread_ids)
 	free(data);
 }
 
-void	cleanup_philos(t_philo **philo, int index)
+void	cleanup_philos(t_philo **philo, int index, int mutex)
 {
 	int	i;
 
 	i = 0;
+	if (mutex == -1)
+		free(philo);
 	while (i < index)
 	{
-		pthread_mutex_destroy(&philo[i]->m_last_meal_time);
-		free(philo[i]);
+		if (mutex == 0)
+			pthread_mutex_destroy(&philo[i]->m_last_meal_time);
+		else if (mutex == 1)
+			pthread_mutex_destroy(&philo[i]->m_state);
 		i++;
 	}
 	free(philo);

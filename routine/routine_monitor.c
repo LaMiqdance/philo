@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:06:26 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/14 11:12:26 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:05:37 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ int	check_death(t_philo **philo, int nb_philo)
 	{
 		pthread_mutex_lock(&philo[i]->m_last_meal_time);
 		time_since_meal = get_current_time_ms() - philo[i]->last_meal_time;
+		pthread_mutex_lock(&philo[i]->m_state);
 		if (time_since_meal > philo[i]->glb_data->time_to_die
 			&& philo[i]->is_eating == 0)
 		{
+			pthread_mutex_lock(&philo[i]->m_state);
 			pthread_mutex_unlock(&philo[i]->m_last_meal_time);
 			philo[i]->glb_data->simu_stop = 1;
 			philo[i]->has_died = 1;

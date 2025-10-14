@@ -64,6 +64,7 @@ t_philo	**init_philo(t_data *data)
 {
 	int		i;
 	int		r;
+	int		s;
 	t_philo	**philo;
 
 	philo = malloc(sizeof(t_philo *) * data->nb_philo);
@@ -74,11 +75,14 @@ t_philo	**init_philo(t_data *data)
 	{
 		philo[i] = fill_philo_subpart(data, i);
 		if (!philo[i])
-			return (cleanup_philos(philo, i), NULL);
+			return (cleanup_philos(philo, i, -1), NULL);
 		init_states(philo[i]);
 		r = pthread_mutex_init(&philo[i]->m_last_meal_time, NULL);
 		if (r != 0)
-			return (cleanup_philos(philo, i), NULL);
+			return (cleanup_philos(philo, i, 0), NULL);
+		s = pthread_mutex_init(&philo[i]->m_state, NULL);
+		if (s != 0)
+			return (cleanup_philos(philo, i, 1), NULL);
 		i++;
 	}
 	return (philo);

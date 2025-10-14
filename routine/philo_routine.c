@@ -24,7 +24,7 @@ int	lock_fork(t_philo *philo)
 		return (0);
 	}
 	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
-	lock_state(philo, philo->is_thinking, 0);
+	philo->is_thinking = 0;
 	my_guy_is_eating(philo);
 	return (1);
 }
@@ -75,6 +75,7 @@ void	*philosopher_routine(void *arg)
 	philo = only_philo(philo);
 	if (!philo)
 		return (NULL);
+	usleep((philo->id % 2) * 1000);
 	flag = 1;
 	while (1)
 	{

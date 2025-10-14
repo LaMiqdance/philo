@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:20:16 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/14 19:55:42 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:39:19 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ int		take_fork(t_philo *philo, int fork_index)
 		return (0);
 	}
 	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
-	lock_state(philo, philo->has_taken_a_fork, 1);
+	pthread_mutex_lock(&philo->m_state);
+	philo->has_taken_a_fork = 1;
+	pthread_mutex_unlock(&philo->m_state);
 	mutex_print(philo);
 	return (1);
 }
@@ -67,12 +69,5 @@ void	set_thinking_state(t_philo *philo)
 	pthread_mutex_lock(&philo->m_state);
 	philo->is_sleeping = 0;
 	philo->is_thinking = 1;
-	pthread_mutex_unlock(&philo->m_state);
-}
-
-void	lock_state(t_philo *philo, int state, int value)
-{
-	pthread_mutex_lock(&philo->m_state);
-	state = value;
 	pthread_mutex_unlock(&philo->m_state);
 }

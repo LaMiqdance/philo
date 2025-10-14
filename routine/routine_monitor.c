@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:06:26 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/13 22:13:11 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/14 09:11:12 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	*monitor_routine(void *arg)
 	t_philo	**philos;
 
 	philos = (t_philo **)arg;
-	// printf("monitor starting \n");
 	while (1)
 	{
 		pthread_mutex_lock(&(*philos)->glb_data->m_simu_stop);

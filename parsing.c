@@ -6,13 +6,11 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 13:09:35 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/13 22:15:36 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/14 09:11:35 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 int	ft_atoi(const char *str)
 {

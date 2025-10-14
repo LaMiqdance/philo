@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:33:13 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/14 11:21:39 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:25:15 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,3 @@ void	my_guy_is_eating(t_philo *philo)
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 }
-

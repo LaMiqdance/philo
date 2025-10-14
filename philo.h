@@ -61,17 +61,19 @@ typedef struct s_philo
 // parsing
 int						is_nbr(char *str);
 int						is_positive(char *str);
-int						ft_atoi(const char *str);
 int						range_check(int i, int index);
 int						*parse_args(int ac, char **args);
 t_data					*fill_struct(int ac, char **av);
 
 // init
-int						init_data(t_data *data);
-void					init_states(t_philo *philo);
 int						init_threads(pthread_t *threads_ids, t_philo **philo);
 pthread_mutex_t			*init_forks(t_data *data);
 t_philo					**init_philo(t_data *data);
+
+// init_utils
+int						init_data(t_data *data);
+void					init_states(t_philo *philo);
+t_philo					*fill_philo_subpart(t_data *data, int i);
 
 // time management
 unsigned long long		get_current_time_ms(void);
@@ -111,5 +113,6 @@ void					final_cleanup(t_philo **philo, t_data *data,
 // utils
 int						ft_strlen(char *str);
 char					*ft_strdup(char *s);
+int						ft_atoi(const char *str);
 
 #endif

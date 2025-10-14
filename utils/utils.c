@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:34:12 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/13 12:16:07 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/14 11:41:17 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,29 @@ char	*ft_strdup(char *s)
 	}
 	str[i] = '\0';
 	return (str);
+}
+
+int	ft_atoi(const char *str)
+{
+	int	i;
+	int	sign;
+	int	nb;
+
+	i = 0;
+	sign = 1;
+	nb = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		nb = nb * 10 + str[i] - '0';
+		i++;
+	}
+	return (sign * nb);
 }

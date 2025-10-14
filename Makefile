@@ -8,6 +8,7 @@ SRCS = \
     philo.c \
 	parsing.c \
     init/init.c \
+	init/init_utils.c \
     routine/philo_routine.c \
 	routine/routine_monitor.c \
 	routine/routine2.c \

@@ -13,25 +13,6 @@
 
 #include "../philo.h"
 
-int	init_data(t_data *data)
-{
-	pthread_mutex_init(&data->m_simu_stop, NULL);
-	pthread_mutex_init(&data->m_print, NULL);
-	data->simu_stop = 0;
-	data->start_time = get_current_time_ms();
-	return (1);
-}
-
-void	init_states(t_philo *philo)
-{
-	philo->is_thinking = 0;
-	philo->has_taken_a_fork = 0;
-	philo->is_eating = 0;
-	philo->is_sleeping = 0;
-	philo->has_died = 0;
-	philo->meals_eaten = 0;
-}
-
 int	init_threads(pthread_t *threads_ids, t_philo **philo)
 {
 	int	i;
@@ -84,7 +65,6 @@ t_philo	**init_philo(t_data *data)
 	int		i;
 	int		r;
 	t_philo	**philo;
-	t_philo	*str;
 
 	philo = malloc(sizeof(t_philo *) * data->nb_philo);
 	if (!philo)
@@ -92,24 +72,13 @@ t_philo	**init_philo(t_data *data)
 	i = 0;
 	while (i < data->nb_philo)
 	{
-		str = malloc(sizeof(t_philo));
-		if (!str)
-		{
-			cleanup_philos(philo, i);
-			return (NULL);
-		}
-		philo[i] = str;
-		philo[i]->id = i + 1;
-		philo[i]->glb_data = data;
-		philo[i]->last_meal_time = get_current_time_ms();
+		philo[i] = fill_philo_subpart(data, i);
+		if (!philo[i])
+			return (cleanup_philos(philo, i), NULL);
 		init_states(philo[i]);
 		r = pthread_mutex_init(&philo[i]->m_last_meal_time, NULL);
 		if (r != 0)
-		{
-			free(str);
-			cleanup_philos(philo, i);
-			return (NULL);
-		}
+			return (cleanup_philos(philo, i), NULL);
 		i++;
 	}
 	return (philo);

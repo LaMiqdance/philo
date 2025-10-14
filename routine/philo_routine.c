@@ -56,8 +56,7 @@ void	unlock_fork(t_philo *philo)
 	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
 	{
 		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
-		if (philo->id % 2 == 0)
-			unlock_which_first(philo);
+		unlock_which_first(philo);
 		return ;
 	}
 	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
@@ -70,8 +69,7 @@ void	unlock_fork(t_philo *philo)
 	precise_timing(philo->glb_data->time_to_sleep);
 	philo->is_sleeping = 0;
 	philo->is_thinking = 1;
-	if (!state_check(philo))
-		return ;
+	state_check(philo);
 	if (philo->glb_data->time_to_think > 0)
 		precise_timing(philo->glb_data->time_to_think);
 }

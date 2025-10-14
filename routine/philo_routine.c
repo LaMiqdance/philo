@@ -57,32 +57,11 @@ void	unlock_fork(t_philo *philo)
 	{
 		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 		if (philo->id % 2 == 0)
-		{
-			pthread_mutex_unlock(&philo->glb_data->forks[philo->id - 1]);
-			pthread_mutex_unlock(&philo->glb_data->forks[philo->id
-				% (philo->glb_data->nb_philo)]);
-		}
-		else
-		{
-			pthread_mutex_unlock(&philo->glb_data->forks[philo->id
-				% (philo->glb_data->nb_philo)]);
-			pthread_mutex_unlock(&philo->glb_data->forks[philo->id - 1]);
-		}
+			unlock_which_first(philo);
 		return ;
 	}
 	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_unlock(&philo->glb_data->forks[philo->id - 1]);
-		pthread_mutex_unlock(&philo->glb_data->forks[philo->id
-			% (philo->glb_data->nb_philo)]);
-	}
-	else
-	{
-		pthread_mutex_unlock(&philo->glb_data->forks[philo->id
-			% (philo->glb_data->nb_philo)]);
-		pthread_mutex_unlock(&philo->glb_data->forks[philo->id - 1]);
-	}
+	unlock_which_first(philo);
 	philo->is_eating = 0;
 	philo->has_taken_a_fork = 0;
 	philo->is_sleeping = 1;

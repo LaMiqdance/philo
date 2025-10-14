@@ -11,6 +11,7 @@ SRCS = \
     routine/philo_routine.c \
 	routine/routine_monitor.c \
 	routine/routine2.c \
+	routine/routine_utils.c \
     time_fcts/global_time_fcts.c \
 	time_fcts/time_management.c \
     utils/utils.c \

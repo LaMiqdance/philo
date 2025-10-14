@@ -89,10 +89,13 @@ void					*philosopher_routine(void *arg);
 int						state_check(t_philo *philo);
 // routine2
 t_philo					*only_philo(t_philo *philo);
-void					mutex_print(t_philo *philo);
 void					my_guy_is_eating(t_philo *philo);
-void					take_fork(t_philo *philo, int fork_index);
+
+// routine_utils
 void					lock_last_meal_time(t_philo *philo);
+void					take_fork(t_philo *philo, int fork_index);
+void					mutex_print(t_philo *philo);
+void					unlock_which_first(t_philo *philo);
 
 // routine_monitor
 int						check_death(t_philo **philo, int nb_philo);

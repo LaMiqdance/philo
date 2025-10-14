@@ -99,7 +99,7 @@ t_philo	**init_philo(t_data *data)
 			return (NULL);
 		}
 		philo[i] = str;
-    	philo[i]->id = i + 1;
+		philo[i]->id = i + 1;
 		philo[i]->glb_data = data;
 		philo[i]->last_meal_time = get_current_time_ms();
 		init_states(philo[i]);

@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:06:26 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/14 09:11:12 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/14 11:12:26 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	check_meals_eaten(t_philo **philo, int nb_philo)
 		return (0);
 	while (i < nb_philo)
 	{
-		if (philo[i]->meals_eaten == philo[i]->glb_data->number_of_times_each_philosopher_must_eat)
+		if (philo[i]->meals_eaten
+			== philo[i]->glb_data->number_of_times_each_philosopher_must_eat)
 			i++;
 		else
 			return (0);
@@ -40,7 +41,8 @@ int	check_death(t_philo **philo, int nb_philo)
 	{
 		pthread_mutex_lock(&philo[i]->m_last_meal_time);
 		time_since_meal = get_current_time_ms() - philo[i]->last_meal_time;
-		if (time_since_meal > philo[i]->glb_data->time_to_die && philo[i]->is_eating == 0)
+		if (time_since_meal > philo[i]->glb_data->time_to_die
+			&& philo[i]->is_eating == 0)
 		{
 			pthread_mutex_unlock(&philo[i]->m_last_meal_time);
 			philo[i]->glb_data->simu_stop = 1;

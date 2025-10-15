@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: midiagne <midiagne@student.42.fr>           +#+  +:+
-	+#+        */
+/*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/29 14:03:19 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/09 20:07:12 by midiagne         ###   ########.fr       */
+/*   Created: 2025/10/15 02:17:24 by midiagne          #+#    #+#             */
+/*   Updated: 2025/10/15 02:19:48 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../philo.h"
 
@@ -47,8 +47,7 @@ void	unlock_fork(t_philo *philo)
 	set_thinking_state(philo);
 	if (!state_check(philo))
 		return ;
-	if (philo->glb_data->time_to_think > 0)
-		precise_timing(philo->glb_data->time_to_think);
+	// Dans unlock_fork(), remet :
 }
 
 int	fcts_summed_up(t_philo *philo)

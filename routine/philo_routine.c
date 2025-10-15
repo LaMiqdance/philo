@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 02:17:24 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/15 10:43:59 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:38:24 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_philo	*only_philo(t_philo *philo)
 		pthread_mutex_lock(&philo->glb_data->forks[0]);
 		pthread_mutex_lock(&philo->m_state);
 		philo->has_taken_a_fork = 1;
-		pthread_mutex_lock(&philo->m_state);
+		pthread_mutex_unlock(&philo->m_state);
 		mutex_print(philo);
 		pthread_mutex_unlock(&philo->glb_data->forks[0]);
 		return (NULL);
@@ -31,11 +31,14 @@ static t_philo	*only_philo(t_philo *philo)
 static int	fcts_summed_up(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
+	pthread_mutex_lock(&philo->m_state);
 	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
 	{
+		pthread_mutex_unlock(&philo->m_state);
 		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 		return (0);
 	}
+	pthread_mutex_unlock(&philo->m_state);
 	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 	if (lock_fork(philo) == 1)
 		unlock_fork(philo);
@@ -48,7 +51,8 @@ void	*philosopher_routine(void *arg)
 	int		flag;
 
 	philo = (t_philo *)arg;
-	philo->last_meal_time = get_current_time_ms();
+	
+	lock_last_meal_time(philo);
 	philo = only_philo(philo);
 	if (!philo)
 		return (NULL);

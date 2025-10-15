@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 10:16:09 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/15 10:36:34 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/15 10:47:58 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,6 @@ void	unlock_fork(t_philo *philo)
 	set_thinking_state(philo);
 	if (!state_check(philo))
 		return ;
+	if (philo->glb_data->time_to_think > 0)
+		precise_timing(philo->glb_data->time_to_think);
 }

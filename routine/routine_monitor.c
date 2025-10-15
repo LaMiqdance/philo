@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:06:26 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/15 12:53:23 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:55:10 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,13 @@ static int	check_meals_eaten(t_philo **philo, int nb_philo)
 		return (0);
 	while (i < nb_philo)
 	{
-		pthread_mutex_lock(&philo[i]->glb_data->m_simu_stop);
-		if (philo[i]->meals_eaten == philo[i]->glb_data->number_of_times_each_philosopher_must_eat)
-		{
-			pthread_mutex_unlock(&philo[i]->glb_data->m_simu_stop);
+		if (philo[i]->meals_eaten
+			== philo[i]->glb_data->number_of_times_each_philosopher_must_eat)
 			i++;
-		}
 		else
-		{
-			pthread_mutex_unlock(&philo[i]->glb_data->m_simu_stop);
 			return (0);
-		}
 	}
-	pthread_mutex_lock(&(*philo)->glb_data->m_simu_stop);
-	philo[i]->glb_data->simu_stop = 1;
-	pthread_mutex_unlock(&(*philo)->glb_data->m_simu_stop);
+	(*philo)->glb_data->simu_stop = 1;
 	return (1);
 }
 
@@ -55,17 +47,15 @@ static int	check_death(t_philo **philo, int nb_philo)
 		{
 			pthread_mutex_unlock(&philo[i]->m_state);
 			pthread_mutex_unlock(&philo[i]->m_last_meal_time);
-			pthread_mutex_lock(&philo[i]->glb_data->m_simu_stop);
 			philo[i]->glb_data->simu_stop = 1;
-			pthread_mutex_unlock(&philo[i]->glb_data->m_simu_stop);
 			pthread_mutex_lock(&philo[i]->m_state);
 			philo[i]->has_died = 1;
 			pthread_mutex_unlock(&philo[i]->m_state);
 			mutex_print(philo[i]);
 			return (1);
 		}
-		pthread_mutex_unlock(&philo[i]->m_state);
 		pthread_mutex_unlock(&philo[i]->m_last_meal_time);
+		pthread_mutex_unlock(&philo[i]->m_state);
 		i++;
 	}
 	return (0);
@@ -78,9 +68,14 @@ void	*monitor_routine(void *arg)
 	philos = (t_philo **)arg;
 	while (1)
 	{
+		pthread_mutex_lock(&(*philos)->glb_data->m_simu_stop);
 		if (check_death(philos, (*philos)->glb_data->nb_philo) == 1
 			|| check_meals_eaten(philos, (*philos)->glb_data->nb_philo) == 1)
+		{
+			pthread_mutex_unlock(&(*philos)->glb_data->m_simu_stop);
 			return (NULL);
+		}
+		pthread_mutex_unlock(&(*philos)->glb_data->m_simu_stop);
 		precise_timing(3);
 	}
 }

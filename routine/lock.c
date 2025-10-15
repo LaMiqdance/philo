@@ -6,25 +6,22 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 07:59:39 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/15 13:38:47 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:57:21 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-static int	take_fork(t_philo *philo, int fork_index)
+static int		take_fork(t_philo *philo, int fork_index)
 {
 	pthread_mutex_lock(&philo->glb_data->forks[fork_index]);
 	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
-	pthread_mutex_lock(&philo->m_state);
 	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
 	{
 		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 		pthread_mutex_unlock(&philo->glb_data->forks[fork_index]);
-		pthread_mutex_unlock(&philo->m_state);
 		return (0);
 	}
-	pthread_mutex_unlock(&philo->m_state);
 	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 	pthread_mutex_lock(&philo->m_state);
 	philo->has_taken_a_fork = 1;
@@ -33,7 +30,7 @@ static int	take_fork(t_philo *philo, int fork_index)
 	return (1);
 }
 
-static int	fork_taken_error(t_philo *philo, int first, int second)
+static int fork_taken_error(t_philo *philo, int first, int second)
 {
 	if (!first)
 		return (0);
@@ -53,8 +50,8 @@ static int	fork_taken_error(t_philo *philo, int first, int second)
 
 static int	check_forks_succesfully_taken(t_philo *philo)
 {
-	int	first_fork;
-	int	second_fork;
+	int first_fork;
+	int second_fork;
 
 	if (philo->id % 2 == 0)
 	{
@@ -89,18 +86,13 @@ int	lock_fork(t_philo *philo)
 	if (!check_forks_succesfully_taken(philo))
 		return (0);
 	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
-	pthread_mutex_lock(&philo->m_state);
 	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
 	{
-		pthread_mutex_unlock(&philo->m_state);
 		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 		return (0);
 	}
-	pthread_mutex_unlock(&philo->m_state);
 	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
-	pthread_mutex_lock(&philo->m_state);
 	philo->is_thinking = 0;
-	pthread_mutex_unlock(&philo->m_state);
 	my_guy_is_eating(philo);
 	return (1);
 }

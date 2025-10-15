@@ -6,51 +6,29 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 02:17:24 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/15 02:19:48 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/15 10:35:05 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../philo.h"
 
-int	lock_fork(t_philo *philo)
+static t_philo	*only_philo(t_philo *philo)
 {
-	if (!check_forks_succesfully_taken(philo))
-		return (0);
-	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
-	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
+	if (philo->glb_data->nb_philo == 1)
 	{
-		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
-		return (0);
+		pthread_mutex_lock(&philo->glb_data->forks[0]);
+		pthread_mutex_lock(&philo->m_state);
+		philo->has_taken_a_fork = 1;
+		pthread_mutex_lock(&philo->m_state);
+		mutex_print(philo);
+		pthread_mutex_unlock(&philo->glb_data->forks[0]);
+		return (NULL);
 	}
-	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
-	philo->is_thinking = 0;
-	my_guy_is_eating(philo);
-	return (1);
+	return (philo);
 }
 
-void	unlock_fork(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
-	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
-	{
-		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
-		unlock_which_first(philo);
-		return ;
-	}
-	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
-	unlock_which_first(philo);
-	set_sleeping_state(philo);
-	if (!state_check(philo))
-		return ;
-	precise_timing(philo->glb_data->time_to_sleep);
-	set_thinking_state(philo);
-	if (!state_check(philo))
-		return ;
-	// Dans unlock_fork(), remet :
-}
-
-int	fcts_summed_up(t_philo *philo)
+static int	fcts_summed_up(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
 	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)

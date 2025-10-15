@@ -6,13 +6,13 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:06:26 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/14 20:36:22 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/15 10:37:50 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int	check_meals_eaten(t_philo **philo, int nb_philo)
+static int	check_meals_eaten(t_philo **philo, int nb_philo)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ int	check_meals_eaten(t_philo **philo, int nb_philo)
 	return (1);
 }
 
-int	check_death(t_philo **philo, int nb_philo)
+static int	check_death(t_philo **philo, int nb_philo)
 {
 	int					i;
 	unsigned long long	time_since_meal;

@@ -92,32 +92,22 @@ void					while_asleep(t_timer *timing);
 void					precise_timing(int ms);
 char					*print_management(t_philo *philo);
 void					time_print(t_philo *philo);
+
 // philo_routine
-int						lock_fork(t_philo *philo);
-void					unlock_fork(t_philo *philo);
-int						fcts_summed_up(t_philo *philo);
 void					*philosopher_routine(void *arg);
 
-// unlock_utils
-int						state_check(t_philo *philo);
-int						fork_taken_error(t_philo *philo, int first, int second);
-int						check_forks_succesfully_taken(t_philo *philo);
+// lock
+int						lock_fork(t_philo *philo);
 
-// routine2
-t_philo					*only_philo(t_philo *philo);
-void					my_guy_is_eating(t_philo *philo);
+// unlock
+void					unlock_fork(t_philo *philo);
+
 
 // routine_utils
 void					lock_last_meal_time(t_philo *philo);
-int						take_fork(t_philo *philo, int fork_index);
 void					mutex_print(t_philo *philo);
-void					unlock_which_first(t_philo *philo);
-void					set_sleeping_state(t_philo *philo);
-void					set_thinking_state(t_philo *philo);
 
 // routine_monitor
-int						check_death(t_philo **philo, int nb_philo);
-int						check_meals_eaten(t_philo **philo, int nb_philo);
 void					*monitor_routine(void *arg);
 
 // cleanup

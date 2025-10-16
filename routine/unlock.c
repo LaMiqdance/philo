@@ -6,13 +6,13 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 10:16:09 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/15 13:56:46 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:34:18 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-static void	unlock_which_first(t_philo *philo)
+void	unlock_which_first(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{

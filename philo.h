@@ -20,14 +20,6 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-/* typedef enum e_state_type
-{
-	STATE_EATING,
-	STATE_SLEEPING,
-	STATE_THINKING,
-	STATE_FORK,
-}						t_state_type; */
-
 typedef struct s_data
 {
 	int					nb_philo;
@@ -101,6 +93,7 @@ int						lock_fork(t_philo *philo);
 
 // unlock
 void					unlock_fork(t_philo *philo);
+void					unlock_which_first(t_philo *philo);
 
 // routine_utils
 void					lock_last_meal_time(t_philo *philo);

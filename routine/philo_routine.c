@@ -6,10 +6,9 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 02:17:24 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/15 13:52:28 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/16 11:37:03 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../philo.h"
 
@@ -48,7 +47,6 @@ void	*philosopher_routine(void *arg)
 	int		flag;
 
 	philo = (t_philo *)arg;
-	
 	lock_last_meal_time(philo);
 	philo = only_philo(philo);
 	if (!philo)

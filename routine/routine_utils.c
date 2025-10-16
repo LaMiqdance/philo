@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 10:23:55 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/15 10:27:12 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/16 11:37:12 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,3 @@ void	mutex_print(t_philo *philo)
 	time_print(philo);
 	pthread_mutex_unlock(&philo->glb_data->m_print);
 }
-

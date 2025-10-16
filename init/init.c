@@ -60,37 +60,37 @@ pthread_mutex_t	*init_forks(t_data *data)
 	return (data->forks);
 }
 
-t_philo **init_philo(t_data *data)
+t_philo	**init_philo(t_data *data)
 {
-    int i;
-    int r;
-    int s;
-    t_philo **philo;
+	int		i;
+	int		r;
+	int		s;
+	t_philo	**philo;
 
-    philo = malloc(sizeof(t_philo *) * data->nb_philo);
-    if (!philo)
-        return (NULL);
-    i = 0;
-    while (i < data->nb_philo)
-    {
-        philo[i] = fill_philo_subpart(data, i);
-        if (!philo[i])
-            return (cleanup_philos(philo, i, -1), NULL);
-        init_states(philo[i]);
-        r = pthread_mutex_init(&philo[i]->m_last_meal_time, NULL);
-        if (r != 0)
-        {
-            free(philo[i]);
-            return (cleanup_philos(philo, i, -1), NULL);
-        }
-        s = pthread_mutex_init(&philo[i]->m_state, NULL);
-        if (s != 0)
-        {
-            pthread_mutex_destroy(&philo[i]->m_last_meal_time);
-            free(philo[i]);
-            return (cleanup_philos(philo, i, -1), NULL);
-        }
-        i++;
-    }
-    return (philo);
+	philo = malloc(sizeof(t_philo *) * data->nb_philo);
+	if (!philo)
+		return (NULL);
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		philo[i] = fill_philo_subpart(data, i);
+		if (!philo[i])
+			return (cleanup_philos(philo, i, -1), NULL);
+		init_states(philo[i]);
+		r = pthread_mutex_init(&philo[i]->m_last_meal_time, NULL);
+		if (r != 0)
+		{
+			free(philo[i]);
+			return (cleanup_philos(philo, i, -1), NULL);
+		}
+		s = pthread_mutex_init(&philo[i]->m_state, NULL);
+		if (s != 0)
+		{
+			pthread_mutex_destroy(&philo[i]->m_last_meal_time);
+			free(philo[i]);
+			return (cleanup_philos(philo, i, -1), NULL);
+		}
+		i++;
+	}
+	return (philo);
 }

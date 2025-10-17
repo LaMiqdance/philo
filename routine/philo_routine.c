@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 02:17:24 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/16 16:48:42 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/17 18:45:17 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,12 @@ void	*philosopher_routine(void *arg)
 	int		flag;
 
 	philo = (t_philo *)arg;
-	lock_last_meal_time(philo);
 	philo = only_philo(philo);
 	if (!philo)
 		return (NULL);
 	if ((philo->id) % 2 == 1)
 		usleep(1000);
-	if (philo->glb_data->nb_philo % 2 == 1 && philo->id == philo->glb_data->nb_philo)
+	if (philo->glb_data->nb_philo % 2 == 0 && philo->id == philo->glb_data->nb_philo)
 		usleep(2000);
 	flag = 1;
 	while (1)

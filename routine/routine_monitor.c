@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:06:26 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/17 20:17:06 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/17 20:49:19 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	check_meals_eaten(t_philo **philo, int nb_philo)
 		if (philo[i]->meals_eaten
 			>= philo[i]->glb_data->number_of_times_each_philosopher_must_eat)
 		{
-			pthread_mutex_unlock(&philo[i]->m_state);	
+			pthread_mutex_unlock(&philo[i]->m_state);
 			i++;
 		}
 		else
@@ -34,7 +34,7 @@ static int	check_meals_eaten(t_philo **philo, int nb_philo)
 			return (0);
 		}
 	}
-	printf("DEBUG: All philos have eaten enough! Setting simu_stop\n");
+	// printf("DEBUG: All philos have eaten enough! Setting simu_stop\n");
 	pthread_mutex_lock(&(*philo)->glb_data->m_simu_stop);
 	(*philo)->glb_data->simu_stop = 1;
 	pthread_mutex_unlock(&(*philo)->glb_data->m_simu_stop);
@@ -55,10 +55,10 @@ static int	check_death(t_philo **philo, int nb_philo)
 		if (time_since_meal > philo[i]->glb_data->time_to_die
 			&& philo[i]->is_eating == 0)
 		{
+			pthread_mutex_unlock(&philo[i]->m_state);
 			pthread_mutex_unlock(&philo[i]->m_last_meal_time);
 			philo[i]->glb_data->simu_stop = 1;
 			philo[i]->has_died = 1;
-			pthread_mutex_unlock(&philo[i]->m_state);
 			mutex_print(philo[i]);
 			return (1);
 		}

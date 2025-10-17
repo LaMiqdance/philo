@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 13:09:35 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/17 18:54:55 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/17 20:25:57 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,9 @@ t_data	*fill_struct(int ac, char **av)
 	parsed->time_to_die = tab[1];
 	parsed->time_to_eat = tab[2];
 	parsed->time_to_sleep = tab[3];
-	parsed->time_to_think = (parsed->time_to_die - parsed->time_to_eat
-			- parsed->time_to_sleep) / 2;
-	//if (parsed->time_to_think <= 0)
+	//parsed->time_to_think = (parsed->time_to_die - parsed->time_to_eat
+		//	- parsed->time_to_sleep) / 2;
+	// if (parsed->time_to_think <= 0)
 	parsed->time_to_think = 0;
 	if (ac == 6)
 		parsed->number_of_times_each_philosopher_must_eat = tab[4];

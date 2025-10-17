@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 07:59:39 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/17 19:32:53 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/17 20:54:03 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 static int	take_fork(t_philo *philo, int fork_index)
 {
+	pthread_mutex_lock(&philo->m_state);
 	pthread_mutex_lock(&philo->glb_data->forks[fork_index]);
 	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
 	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
 	{
 		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 		pthread_mutex_unlock(&philo->glb_data->forks[fork_index]);
+		pthread_mutex_unlock(&philo->m_state);
 		return (0);
 	}
 	pthread_mutex_lock(&philo->m_state);
@@ -93,12 +95,15 @@ int	lock_fork(t_philo *philo)
 	if (!check_forks_succesfully_taken(philo))
 		return (0);
 	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
+	pthread_mutex_lock(&philo->m_state);
 	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
 	{
+		pthread_mutex_unlock(&philo->m_state);
 		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 		unlock_which_first(philo);
 		return (0);
 	}
+	pthread_mutex_unlock(&philo->m_state);
 	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 	pthread_mutex_lock(&philo->m_state);
 	philo->is_thinking = 0;

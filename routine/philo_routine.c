@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 02:17:24 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/16 11:37:03 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/16 16:48:42 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static int	fcts_summed_up(t_philo *philo)
 	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 	if (lock_fork(philo) == 1)
 		unlock_fork(philo);
+	//else
+	//	usleep(philo->glb_data->time_to_think);
 	return (1);
 }
 
@@ -51,7 +53,10 @@ void	*philosopher_routine(void *arg)
 	philo = only_philo(philo);
 	if (!philo)
 		return (NULL);
-	usleep((philo->id % 2) * 1000);
+	if ((philo->id) % 2 == 1)
+		usleep(1000);
+	if (philo->glb_data->nb_philo % 2 == 1 && philo->id == philo->glb_data->nb_philo)
+		usleep(2000);
 	flag = 1;
 	while (1)
 	{

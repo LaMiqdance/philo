@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 07:59:39 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/17 18:48:39 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/17 19:32:53 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ static void	my_guy_is_eating(t_philo *philo)
 	mutex_print(philo);
 	lock_last_meal_time(philo);
 	precise_timing(philo->glb_data->time_to_eat);
-	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
+	pthread_mutex_lock(&philo->m_state);
 	philo->meals_eaten++;
-	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
+	pthread_mutex_unlock(&philo->m_state);
 }
 
 int	lock_fork(t_philo *philo)

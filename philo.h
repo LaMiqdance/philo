@@ -70,6 +70,8 @@ t_data					*fill_struct(int ac, char **av);
 int						init_threads(pthread_t *threads_ids, t_philo **philo);
 pthread_mutex_t			*init_forks(t_data *data);
 t_philo					**init_philo(t_data *data);
+void					run_simulation(pthread_t *thread_ids,
+							pthread_t monitor_thread, int nb_philo);
 
 // init_utils
 int						init_data(t_data *data);

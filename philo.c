@@ -18,8 +18,8 @@ void	run_simulation(pthread_t *thread_ids, pthread_t monitor_thread,
 {
 	int	i;
 
-	pthread_join(monitor_thread, NULL);
 	i = 0;
+	pthread_join(monitor_thread, NULL);
 	while (i < nb_philo)
 	{
 		pthread_join(thread_ids[i], NULL);
@@ -37,16 +37,21 @@ int	main(int ac, char **av)
 	data = fill_struct(ac, av);
 	if (!data)
 		return (1);
+	printf("done1");
 	thread_ids = malloc(sizeof(pthread_t) * data->nb_philo);
 	if (!thread_ids)
 		return (free(data), 1);
+	printf("done2");
 	data->forks = init_forks(data);
 	if (!data->forks)
 		return (free(data), free(thread_ids), 1);
+	printf("done3");
 	init_data(data);
+	printf("done4");
 	philo = init_philo(data);
 	if (!philo)
 		return (free(data), free(thread_ids), free(data->forks), 1);
+	printf("done5");
 	if (init_threads(thread_ids, philo) == 0)
 		return (final_cleanup(philo, data, thread_ids), 1);
 	pthread_create(&monitor_thread, NULL, monitor_routine, philo);

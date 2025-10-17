@@ -1,8 +1,7 @@
 NAME = philo
-CC = cc
+CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
-AR = ar rcs
 OBJS =	${SRCS:.c=.o}
 SRCS = \
     philo.c \

@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 02:17:24 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/17 20:49:41 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/18 00:15:40 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,11 @@ static t_philo	*only_philo(t_philo *philo)
 static int	fcts_summed_up(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
-	pthread_mutex_lock(&philo->m_state);
 	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
 	{
-		pthread_mutex_unlock(&philo->m_state);
 		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 		return (0);
 	}
-	pthread_mutex_unlock(&philo->m_state);
 	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 	if (lock_fork(philo) == 1)
 		unlock_fork(philo);
@@ -52,13 +49,13 @@ void	*philosopher_routine(void *arg)
 	int		flag;
 
 	philo = (t_philo *)arg;
+	// printf("Philo %d started!\n", philo->id);
 	philo = only_philo(philo);
 	if (!philo)
 		return (NULL);
 	if ((philo->id) % 2 == 1)
 		usleep(1000);
-	if (philo->glb_data->nb_philo % 2 == 0
-		&& philo->id == philo->glb_data->nb_philo)
+	if (philo->glb_data->nb_philo % 2 == 0 && philo->id == philo->glb_data->nb_philo)
 		usleep(2000);
 	flag = 1;
 	while (1)

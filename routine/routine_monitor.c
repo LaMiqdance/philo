@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:06:26 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/17 20:49:19 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/17 22:15:35 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	*monitor_routine(void *arg)
 {
 	t_philo	**philos;
 
+	printf("Monitor thread started!\n");
 	philos = (t_philo **)arg;
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:10:36 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/16 11:36:25 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/18 00:30:17 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	final_cleanup(t_philo **philo, t_data *data, pthread_t *thread_ids)
 	{
 		pthread_mutex_destroy(&philo[i]->m_last_meal_time);
 		pthread_mutex_destroy(&philo[i]->m_state);
+		pthread_mutex_destroy(&data->forks[i]);
 		free(philo[i]);
 		i++;
 	}

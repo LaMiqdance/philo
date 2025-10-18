@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 07:59:39 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/17 22:21:21 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/18 13:45:25 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,60 +14,55 @@
 
 static int		take_fork(t_philo *philo, int fork_index)
 {
-	pthread_mutex_lock(&philo->glb_data->forks[fork_index]);
-	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
-	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
-	{
-		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
-		pthread_mutex_unlock(&philo->glb_data->forks[fork_index]);
-		return (0);
-	}
-	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
-	pthread_mutex_lock(&philo->m_state);
-	philo->has_taken_a_fork = 1;
-	pthread_mutex_unlock(&philo->m_state);
-	mutex_print(philo);
-	return (1);
+    pthread_mutex_lock(&philo->glb_data->forks[fork_index]);
+    pthread_mutex_lock(&philo->glb_data->m_simu_stop);
+    pthread_mutex_lock(&philo->m_state);
+    if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
+    {
+        pthread_mutex_unlock(&philo->m_state);
+        pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
+        pthread_mutex_unlock(&philo->glb_data->forks[fork_index]);
+        return (0);
+    }
+    philo->has_taken_a_fork = 1;
+    pthread_mutex_unlock(&philo->m_state);
+    pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
+    mutex_print(philo);
+    return (1);
 }
 
-static int	fork_taken_error(t_philo *philo, int first, int second)
+static int check_forks_succesfully_taken(t_philo *philo)
 {
-	if (!first)
-		return (0);
-	if (!second)
-	{
-		if (philo->id % 2 == 0)
-			pthread_mutex_unlock(&philo->glb_data->forks[philo->id - 1]);
-		else
-		{
-			pthread_mutex_unlock(&philo->glb_data->forks[philo->id
-				% philo->glb_data->nb_philo]);
-		}
-		return (0);
-	}
-	return (1);
-}
-
-static int	check_forks_succesfully_taken(t_philo *philo)
-{
-	int	first_fork;
-	int	second_fork;
-
-	if (philo->id % 2 == 0)
-	{
-		first_fork = take_fork(philo, philo->id - 1);
-		second_fork = take_fork(philo, philo->id % philo->glb_data->nb_philo);
-		if (!fork_taken_error(philo, first_fork, second_fork))
-			return (0);
-	}
-	else
-	{
-		first_fork = take_fork(philo, philo->id % philo->glb_data->nb_philo);
-		second_fork = take_fork(philo, philo->id - 1);
-		if (!fork_taken_error(philo, first_fork, second_fork))
-			return (0);
-	}
-	return (1);
+    int first_fork;
+    int second_fork;
+    int idx_first;
+    int idx_second;
+	
+    if (philo->id % 2 == 0)
+    {
+        idx_first = philo->id - 1;
+        idx_second = philo->id % philo->glb_data->nb_philo;
+    }
+    else
+    {
+        idx_first = philo->id % philo->glb_data->nb_philo;
+        idx_second = philo->id - 1;
+    }
+    first_fork = take_fork(philo, idx_first);
+    if (!first_fork)
+        return (0);
+    second_fork = take_fork(philo, idx_second);
+    if (!second_fork)
+    {
+        /* libérer la première si la seconde a échoué */
+        pthread_mutex_unlock(&philo->glb_data->forks[idx_first]);
+        return (0);
+    }
+    /* les deux forks ont été pris : marquer under m_state */
+    pthread_mutex_lock(&philo->m_state);
+    philo->has_taken_a_fork = 1;
+    pthread_mutex_unlock(&philo->m_state);
+    return (1);
 }
 
 static void	my_guy_is_eating(t_philo *philo)

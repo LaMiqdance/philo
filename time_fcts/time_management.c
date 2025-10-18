@@ -51,7 +51,7 @@ char	*print_management(t_philo *philo)
 	str = NULL;
 	pthread_mutex_lock(&philo->m_state);
 	if (philo->has_died == 1)
-		str = ft_strdup("has died");
+		str = ft_strdup("died");
 	else if (philo->has_taken_a_fork == 1 && philo->is_eating == 0)
 		str = ft_strdup("has taken a fork");
 	else if (philo->is_eating == 1)
@@ -75,6 +75,6 @@ void	time_print(t_philo *philo)
 	if (!str)
 		return ;
 	current_time = get_current_time_ms() - philo->glb_data->start_time;
-	printf("%lld, %d, %s\n", current_time, philo->id, str);
+	printf("%lld %d %s\n", current_time, philo->id, str);
 	free(str);
 }

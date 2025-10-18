@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 10:16:09 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/18 13:21:08 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/18 14:05:31 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,20 @@ static void	set_thinking_state(t_philo *philo)
 
 void	unlock_fork(t_philo *philo)
 {
+	int simu_stop;
+	int has_died;
+	
 	pthread_mutex_lock(&philo->glb_data->m_simu_stop);
-	if (philo->glb_data->simu_stop == 1 || philo->has_died == 1)
+	simu_stop = philo->glb_data->simu_stop;
+	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
+	pthread_mutex_lock(&philo->m_state);
+	has_died = philo->has_died;
+	pthread_mutex_unlock(&philo->m_state);
+	if (simu_stop == 1 || has_died == 1)
 	{
-		pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 		unlock_which_first(philo);
 		return ;
 	}
-	pthread_mutex_unlock(&philo->glb_data->m_simu_stop);
 	unlock_which_first(philo);
 	set_sleeping_state(philo);
 	if (!state_check(philo))

@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:35:56 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/19 17:42:58 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/19 22:55:24 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,22 @@ void	cleanup_philos(t_philo **philo, int index)
 			pthread_mutex_destroy(&philo[i]->m_is_eating);
 			pthread_mutex_destroy(&philo[i]->m_is_thinking);
 			pthread_mutex_destroy(&philo[i]->m_is_sleeping);
-			pthread_mutex_destroy(&philo[i]->last_meal_time);
+			pthread_mutex_destroy(&philo[i]->m_last_meal_time);
 			pthread_mutex_destroy(&philo[i]->m_meals_eaten);
 			pthread_mutex_destroy(&philo[i]->m_has_died);
+			free(philo[i]);
 		}
 		i++;
 	}
 	free(philo);
 }
 
+void	final_cleanup(t_philo **philo, t_data *data, pthread_t *thread_ids)
+{
+	cleanup_philos(philo, data->nb_philo);
+	free(thread_ids);
+	cleanup_mutex(data->forks, data->nb_philo);
+	free(data->forks);
+	free(data);
+}
 // cleanup_n_exit(data)

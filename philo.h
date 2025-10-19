@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:04:17 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/19 17:32:01 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/19 23:24:53 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,27 @@ typedef struct s_timer
 	unsigned long long	target_us;
 }						t_timer;
 
+// parsing
+t_data	*fill_struct(int ac, char **av);
+int		*parse_args(int ac, char **args);
+int		is_positive(char *str);
+int		is_nbr(char *str);
+int		range_check(int i, int index);
+
 // init
 int						init_threads(pthread_t *threads_ids, t_philo **philo);
 int						init_data(t_data *data);
 void					init_states(t_philo *philo);
 pthread_mutex_t			*init_forks(t_data *data);
+t_philo					**init_philos(t_data *data);
 t_philo					*fill_philo_subpart(t_data *data, int i);
+
+// routine
+void					*monitor_routine(void *arg);
 
 // cleanup
 void	cleanup_philos(t_philo **philo, int index);
 void	cleanup_mutex(pthread_mutex_t *mutex, int index);
+void	final_cleanup(t_philo **philo, t_data *data, pthread_t *thread_ids);
 
 #endif

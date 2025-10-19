@@ -1,19 +1,15 @@
 NAME = philo
 CC = cc -g
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
 RM = rm -f
 OBJS =	${SRCS:.c=.o}
 SRCS = \
     philo.c \
 	parsing.c \
     init/init.c \
-	init/init_utils.c \
-    routine/lock.c \
-	routine/philo_routine.c \
-	routine/routine_monitor.c \
-	routine/routine_utils.c \
-	routine/unlock.c \
-    time_fcts/global_time_fcts.c \
+	init/init2.c \
+	routine/monitor_routine.c \
+    time_fcts/time_fcts.c \
 	time_fcts/time_management.c \
     utils/utils.c \
 	cleanup/cleanup.c \

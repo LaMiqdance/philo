@@ -6,13 +6,13 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:17:14 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/19 17:53:09 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/19 22:30:31 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	destroy_n_first_mutexes(t_philo *philo, int n)
+static void	destroy_n_first_mutexes(t_philo *philo, int n)
 {
     if (n >= 1)
         pthread_mutex_destroy(&philo->m_has_taken_a_fork);
@@ -36,7 +36,7 @@ int	init_mutex(t_philo *philo, t_data *data)
 			return (0);
 		if (pthread_mutex_init(&philo->m_is_eating, NULL))
 			return (destroy_n_first_mutexes(philo, 1), 0);
-		if (pthread_mutex_init(&philo->m_is_thinking, NULL));
+		if (pthread_mutex_init(&philo->m_is_thinking, NULL))
 			return (destroy_n_first_mutexes(philo, 2), 0);
 		if (pthread_mutex_init(&philo->m_is_sleeping, NULL))
 			return (destroy_n_first_mutexes(philo, 3), 0);

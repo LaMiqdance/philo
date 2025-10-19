@@ -1,4 +1,4 @@
-#include "../philo.h"
+#include "philo.h"
 
 int	range_check(int i, int index)
 {

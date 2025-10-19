@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:20:10 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/19 17:22:35 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/19 22:31:17 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ t_philo	*fill_philo_subpart(t_data *data, int i)
 {
 	t_philo	*philo;
 	
+	philo = malloc(sizeof(t_philo));
+	if (!philo)
+		return (NULL);
 	philo->id = i + 1;
 	philo->glb_data = data;
 	philo->last_meal_time = get_current_time_ms();

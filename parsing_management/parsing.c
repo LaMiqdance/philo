@@ -5,7 +5,11 @@ int	range_check(int i, int index)
 	if (index == 0)
 	{
 		if (i < 1 || i > 200)
+		{
+			/* write(1, "wrong number of philosophers,
+				should range between 1 and 200", 59); */
 			return (0);
+		}
 		return (1);
 	}
 	else if (index > 0 && index <= 3)

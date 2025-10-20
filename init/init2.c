@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:20:10 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/19 22:31:17 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/20 19:42:54 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,13 @@ t_philo	*fill_philo_subpart(t_data *data, int i)
 
 int	init_data(t_data *data)
 {
-	pthread_mutex_init(&data->m_simu_stop, NULL);
-	pthread_mutex_init(&data->m_print, NULL);
+	if (pthread_mutex_init(&data->m_simu_stop, NULL))
+		return (0);
+	if (pthread_mutex_init(&data->m_print, NULL))
+	{
+		pthread_mutex_destroy(&data->m_simu_stop);
+		return (0);
+	}
 	data->simu_stop = 0;
 	data->start_time = get_current_time_ms();
 	return (1);

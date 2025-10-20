@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:04:17 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/20 17:51:53 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/20 20:02:40 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_timer
 	unsigned long long	target_us;
 }						t_timer;
 
-// parsing
+// parsing reste a integrer les msgs d'ereur
 t_data					*fill_struct(int ac, char **av);
 int						*parse_args(int ac, char **args);
 int						is_positive(char *str);
@@ -96,6 +96,7 @@ char					*ft_strdup(char *s);
 int						ft_atoi(const char *str);
 
 // cleanup
+void					cleanup_data(t_data *data);
 void					cleanup_philos(t_philo **philo, int index);
 void					cleanup_mutex(pthread_mutex_t *mutex, int index);
 void					final_cleanup(t_philo **philo, t_data *data,

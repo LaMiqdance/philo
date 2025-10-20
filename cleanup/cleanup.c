@@ -6,11 +6,17 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:35:56 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/19 22:55:24 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/20 19:52:48 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+void	cleanup_data(t_data *data)
+{
+	pthread_mutex_destroy(&data->m_simu_stop);
+	pthread_mutex_destroy(&data->m_print);
+}
 
 void	cleanup_mutex(pthread_mutex_t *mutex, int index)
 {
@@ -54,6 +60,7 @@ void	final_cleanup(t_philo **philo, t_data *data, pthread_t *thread_ids)
 	free(thread_ids);
 	cleanup_mutex(data->forks, data->nb_philo);
 	free(data->forks);
+	cleanup_data(data);
 	free(data);
 }
 // cleanup_n_exit(data)

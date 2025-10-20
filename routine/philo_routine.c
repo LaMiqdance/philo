@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor_routine.c                                  :+:      :+:    :+:   */
+/*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/19 23:14:00 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/20 17:53:11 by midiagne         ###   ########.fr       */
+/*   Created: 2025/10/20 17:48:07 by midiagne          #+#    #+#             */
+/*   Updated: 2025/10/20 17:56:28 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void    *monitor_routine(void *arg)
+void    *philosopher_routine(void *arg)
 {
-    t_philo **philo;
-
-    philo = (t_philo **)arg;
+    t_philo *philo;
+    philo = (t_philo *)arg;
     return (NULL);
 }

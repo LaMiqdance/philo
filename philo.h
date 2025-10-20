@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:04:17 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/20 17:20:24 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/20 17:51:53 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ int						is_positive(char *str);
 int						is_nbr(char *str);
 int						range_check(int i, int index);
 
+// time fcts
+unsigned long long		get_current_time_ms(void);
+void					while_asleep(t_timer *timing);
+void					precise_timing(int ms);
+
 // init
 int						init_threads(pthread_t *threads_ids, t_philo **philo);
 int						init_data(t_data *data);
@@ -83,6 +88,7 @@ t_philo					*fill_philo_subpart(t_data *data, int i);
 
 // routine
 void					*monitor_routine(void *arg);
+void					*philosopher_routine(void *arg);
 
 // utils
 int						ft_strlen(char *str);

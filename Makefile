@@ -9,8 +9,8 @@ SRCS = \
     init/init.c \
 	init/init2.c \
 	routine/monitor_routine.c \
+	routine/philo_routine.c \
     time_fcts/time_fcts.c \
-	time_fcts/time_management.c \
     utils/utils.c \
 	cleanup/cleanup.c \
 

@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:08:41 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/20 00:17:04 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/20 17:21:18 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	run_simulation(pthread_t *thread_ids, pthread_t monitor_thread,
 		i++;
 	}
 }
-
 
 int	main(int ac, char **av)
 {

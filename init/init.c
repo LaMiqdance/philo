@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:17:14 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/19 22:30:31 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/20 17:18:57 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	destroy_n_first_mutexes(t_philo *philo, int n)
         pthread_mutex_destroy(&philo->m_meals_eaten);
 }
 
-int	init_mutex(t_philo *philo, t_data *data)
+int	init_mutex(t_philo *philo)
 {
 		if (pthread_mutex_init(&philo->m_has_taken_a_fork, NULL))
 			return (0);
@@ -63,7 +63,7 @@ t_philo	**init_philos(t_data *data)
 		philo[i] = fill_philo_subpart(data, i);
 		if (!philo[i])
 			return (cleanup_philos(philo, i), NULL);
-		if (!init_mutex(philo[i], data))
+		if (!init_mutex(philo[i]))
 			return (cleanup_philos(philo, i), NULL);
 		i++;
 	}

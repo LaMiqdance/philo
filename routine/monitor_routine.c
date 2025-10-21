@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 23:14:00 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/20 17:53:11 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/21 12:50:03 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void    *monitor_routine(void *arg)
 {
-    t_philo **philo;
-
-    philo = (t_philo **)arg;
+    (void)arg;
     return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 17:48:07 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/20 21:42:52 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:06:10 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,19 @@ int check_simu_stop(t_philo *philo)
     return (should_stop);
 }
 
-int     take_forks(t_philo *philo)
+static unsigned long long calculate_thinking_time(t_philo *philo)
 {
-    pthread_mutex_t *first_fork;
-    pthread_mutex_t *second_fork;
-
-    if (philo->left_fork < philo->right_fork)
-    {
-        first_fork = philo->left_fork;
-        second_fork = philo->right_fork;
-    }
-    else
-    {
-        first_fork = philo->right_fork;
-        second_fork = philo->left_fork;
-    }
-    pthread_mutex_lock(first_fork);
-    pthread_mutex_lock(second_fork);
-    return (1);
+    unsigned long long base_time = (philo->glb_data->time_to_eat * philo->glb_data->nb_philo) / 8;
+    unsigned long long variation = (philo->id * philo->glb_data->time_to_eat) / 20;
+    return (base_time + variation);
 }
 
-void    sleep(t_philo *philo)
+static void philo_think(t_philo *philo)
 {
-    precise_timing(philo->glb_data->time_to_sleep);
+    precise_timing(calculate_thinking_time(philo));
 }
 
-int     release_forks(t_philo *philo)
+static int     release_forks(t_philo *philo)
 {
     pthread_mutex_t *first_fork;
     pthread_mutex_t *second_fork;
@@ -67,17 +54,47 @@ int     release_forks(t_philo *philo)
     pthread_mutex_unlock(second_fork);
     return (1);
 }
-
-void    eat(t_philo *philo)
+static int     take_forks(t_philo *philo)
 {
-    take_forks(philo);
-    pthread_mutex_lock(&philo->m_last_meal_time);
-    philo->last_meal_time = get_current_time_ms();
-    pthread_mutex_unlock(&philo->m_last_meal_time);
-    
+    pthread_mutex_t *first_fork;
+    pthread_mutex_t *second_fork;
+
+    if (philo->left_fork < philo->right_fork)
+    {
+        first_fork = philo->left_fork;
+        second_fork = philo->right_fork;
+    }
+    else
+    {
+        first_fork = philo->right_fork;
+        second_fork = philo->left_fork;
+    }
+    pthread_mutex_lock(first_fork);
+    if (check_simu_stop(philo))
+        return (pthread_mutex_unlock(first_fork), 0);
+    pthread_mutex_lock(second_fork);
+    if (check_simu_stop(philo))
+        return (release_forks(philo), 0);
+    return (1);
+}
+
+static void    philo_sleep(t_philo *philo)
+{
+    precise_timing(philo->glb_data->time_to_sleep);
+}
+
+
+static void    eat(t_philo *philo)
+{
+    if (!take_forks(philo))
+        return ;
     pthread_mutex_lock(&philo->m_meals_eaten);
     philo->meals_eaten++;
     pthread_mutex_unlock(&philo->m_meals_eaten);
+    
+    pthread_mutex_lock(&philo->m_last_meal_time);
+    philo->last_meal_time = get_current_time_ms();
+    pthread_mutex_unlock(&philo->m_last_meal_time);
     
     precise_timing(philo->glb_data->time_to_eat);
     release_forks(philo);
@@ -87,15 +104,14 @@ void    *philosopher_routine(void *arg)
 {
     t_philo *philo;
     philo = (t_philo *)arg;
-    pthread_mutex_lock(&philo->glb_data->m_simu_stop);
     while (!check_simu_stop(philo))
     {
-       
         eat(philo);
         if (check_simu_stop(philo))
             break;
-        sleep(philo);
+        philo_sleep(philo);
         if (check_simu_stop(philo))
             break;
     }
+    return (NULL);
 }

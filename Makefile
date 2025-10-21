@@ -5,9 +5,10 @@ RM = rm -f
 OBJS =	${SRCS:.c=.o}
 SRCS = \
     philo.c \
-	parsing.c \
     init/init.c \
 	init/init2.c \
+	parsing_management/error_management.c \
+	parsing_management/parsing.c \
 	routine/monitor_routine.c \
 	routine/philo_routine.c \
     time_fcts/time_fcts.c \

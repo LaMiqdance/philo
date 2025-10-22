@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 17:48:07 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/22 14:41:22 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:03:22 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ static unsigned long long calculate_thinking_time(t_philo *philo)
 
 static void philo_think(t_philo *philo)
 {
-    print_status(philo, "is_thinking");
+    unsigned long long time;
+
+    time = get_current_time_ms();
+    print_status(philo, "is thinking", time);
     precise_timing(calculate_thinking_time(philo));
 }
 
@@ -59,7 +62,8 @@ static int     take_forks(t_philo *philo)
 {
     pthread_mutex_t *first_fork;
     pthread_mutex_t *second_fork;
-
+    unsigned long long time;
+    
     if (philo->left_fork < philo->right_fork)
     {
         first_fork = philo->left_fork;
@@ -71,11 +75,13 @@ static int     take_forks(t_philo *philo)
         second_fork = philo->left_fork;
     }
     pthread_mutex_lock(first_fork);
-    print_status(philo, "has_taken_a_fork");
+    time = get_current_time_ms();
+    print_status(philo, "has taken a fork", time);
     if (check_simu_stop(philo))
         return (pthread_mutex_unlock(first_fork), 0);
     pthread_mutex_lock(second_fork);
-    print_status(philo, "has_taken_a_fork");
+    time = get_current_time_ms();
+    print_status(philo, "has taken a fork", time);
     if (check_simu_stop(philo))
         return (release_forks(philo), 0);
     return (1);
@@ -83,12 +89,18 @@ static int     take_forks(t_philo *philo)
 
 static void    philo_sleep(t_philo *philo)
 {
+    unsigned long long time;
+
+    time = get_current_time_ms();
+    print_status(philo, "is sleeping", time);
     precise_timing(philo->glb_data->time_to_sleep);
 }
 
 
 static void    eat(t_philo *philo)
 {
+    unsigned long long time;
+
     if (!take_forks(philo))
         return ;
     pthread_mutex_lock(&philo->m_state);
@@ -99,7 +111,8 @@ static void    eat(t_philo *philo)
     philo->last_meal_time = get_current_time_ms();
     pthread_mutex_unlock(&philo->m_state);
     
-    print_status(philo, "is_eating");
+    time = get_current_time_ms();
+    print_status(philo, "is eating", time);
     precise_timing(philo->glb_data->time_to_eat);
     release_forks(philo);
 }
@@ -114,6 +127,9 @@ void    *philosopher_routine(void *arg)
         if (check_simu_stop(philo))
             break;
         philo_sleep(philo);
+        if (check_simu_stop(philo))
+            break;
+        philo_think(philo);
         if (check_simu_stop(philo))
             break;
     }

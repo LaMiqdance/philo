@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:04:17 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/22 14:39:19 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:48:27 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ void					final_cleanup(t_philo **philo, t_data *data,
 							pthread_t *thread_ids);
 
 // print
-void					print_status(t_philo *philo, char *message);
+void					print_status(t_philo *philo, char *message, unsigned long long time);
 
 #endif

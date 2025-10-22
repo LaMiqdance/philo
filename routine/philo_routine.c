@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 17:48:07 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/21 13:06:10 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:41:22 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static unsigned long long calculate_thinking_time(t_philo *philo)
 
 static void philo_think(t_philo *philo)
 {
+    print_status(philo, "is_thinking");
     precise_timing(calculate_thinking_time(philo));
 }
 
@@ -70,9 +71,11 @@ static int     take_forks(t_philo *philo)
         second_fork = philo->left_fork;
     }
     pthread_mutex_lock(first_fork);
+    print_status(philo, "has_taken_a_fork");
     if (check_simu_stop(philo))
         return (pthread_mutex_unlock(first_fork), 0);
     pthread_mutex_lock(second_fork);
+    print_status(philo, "has_taken_a_fork");
     if (check_simu_stop(philo))
         return (release_forks(philo), 0);
     return (1);
@@ -88,14 +91,15 @@ static void    eat(t_philo *philo)
 {
     if (!take_forks(philo))
         return ;
-    pthread_mutex_lock(&philo->m_meals_eaten);
+    pthread_mutex_lock(&philo->m_state);
     philo->meals_eaten++;
-    pthread_mutex_unlock(&philo->m_meals_eaten);
+    pthread_mutex_unlock(&philo->m_state);
     
-    pthread_mutex_lock(&philo->m_last_meal_time);
+    pthread_mutex_lock(&philo->m_state);
     philo->last_meal_time = get_current_time_ms();
-    pthread_mutex_unlock(&philo->m_last_meal_time);
+    pthread_mutex_unlock(&philo->m_state);
     
+    print_status(philo, "is_eating");
     precise_timing(philo->glb_data->time_to_eat);
     release_forks(philo);
 }

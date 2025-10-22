@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:35:56 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/20 19:52:48 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:25:49 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,7 @@ void	cleanup_philos(t_philo **philo, int index)
 	while (i < index)
 	{
 		if (philo[i])
-		{
-			pthread_mutex_destroy(&philo[i]->m_has_taken_a_fork);
-			pthread_mutex_destroy(&philo[i]->m_is_eating);
-			pthread_mutex_destroy(&philo[i]->m_is_thinking);
-			pthread_mutex_destroy(&philo[i]->m_is_sleeping);
-			pthread_mutex_destroy(&philo[i]->m_last_meal_time);
-			pthread_mutex_destroy(&philo[i]->m_meals_eaten);
-			pthread_mutex_destroy(&philo[i]->m_has_died);
-			free(philo[i]);
-		}
+			pthread_mutex_destroy(&philo[i]->m_state);
 		i++;
 	}
 	free(philo);

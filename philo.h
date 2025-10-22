@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:04:17 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/20 20:02:40 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:39:19 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,7 @@ typedef struct s_philo
 	unsigned long long	last_meal_time;
 	int					has_died;
 
-	pthread_mutex_t		m_has_taken_a_fork;
-	pthread_mutex_t		m_is_eating;
-	pthread_mutex_t		m_is_thinking;
-	pthread_mutex_t		m_is_sleeping;
-	pthread_mutex_t		m_has_died;
-	pthread_mutex_t		m_last_meal_time;
+	pthread_mutex_t		m_state;
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		m_meals_eaten;
@@ -101,5 +96,8 @@ void					cleanup_philos(t_philo **philo, int index);
 void					cleanup_mutex(pthread_mutex_t *mutex, int index);
 void					final_cleanup(t_philo **philo, t_data *data,
 							pthread_t *thread_ids);
+
+// print
+void					print_status(t_philo *philo, char *message);
 
 #endif

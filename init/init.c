@@ -6,13 +6,13 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:17:14 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/20 19:29:04 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:29:40 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-static void	destroy_n_first_mutexes(t_philo *philo, int n)
+/* static void	destroy_n_first_mutexes(t_philo *philo, int n)
 {
     if (n >= 1)
         pthread_mutex_destroy(&philo->m_has_taken_a_fork);
@@ -28,25 +28,15 @@ static void	destroy_n_first_mutexes(t_philo *philo, int n)
         pthread_mutex_destroy(&philo->m_last_meal_time);
     if (n >= 7)
         pthread_mutex_destroy(&philo->m_meals_eaten);
-}
+} */
 
 int	init_mutex(t_philo *philo)
 {
-		if (pthread_mutex_init(&philo->m_has_taken_a_fork, NULL))
-			return (0);
-		if (pthread_mutex_init(&philo->m_is_eating, NULL))
-			return (destroy_n_first_mutexes(philo, 1), 0);
-		if (pthread_mutex_init(&philo->m_is_thinking, NULL))
-			return (destroy_n_first_mutexes(philo, 2), 0);
-		if (pthread_mutex_init(&philo->m_is_sleeping, NULL))
-			return (destroy_n_first_mutexes(philo, 3), 0);
-		if (pthread_mutex_init(&philo->m_has_died, NULL))
-			return (destroy_n_first_mutexes(philo, 4), 0);
-		if (pthread_mutex_init(&philo->m_last_meal_time, NULL))
-			return (destroy_n_first_mutexes(philo, 5), 0);
-		if (pthread_mutex_init(&philo->m_meals_eaten, NULL))
-			return (destroy_n_first_mutexes(philo, 6), 0);
-		return (1);
+	if (pthread_mutex_init(&philo->m_state, NULL))
+		return (0);
+	if (pthread_mutex_init(&philo->m_meals_eaten, NULL))
+		return (pthread_mutex_destroy(&philo->m_state), 0);
+	return (1);
 }
 
 t_philo	**init_philos(t_data *data)

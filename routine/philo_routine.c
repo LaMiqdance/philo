@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 17:48:07 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/22 15:03:22 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:17:59 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,10 @@ void    *philosopher_routine(void *arg)
     {
         eat(philo);
         if (check_simu_stop(philo))
+        {
+            release_forks(philo);
             break;
+        }
         philo_sleep(philo);
         if (check_simu_stop(philo))
             break;

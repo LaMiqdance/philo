@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:20:10 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/21 12:51:39 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/23 00:22:31 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_philo	*fill_philo_subpart(t_data *data, int i)
     philo->right_fork = &data->forks[(i + 1) % data->nb_philo];
     
     // Init états
-    init_states(philo);
 	return (philo);
 }
 
@@ -44,7 +43,7 @@ int	init_data(t_data *data)
 	return (1);
 }
 
-void	init_states(t_philo *philo)
+/* void	init_states(t_philo *philo)
 {
 	philo->is_thinking = 0;
 	philo->has_taken_a_fork = 0;
@@ -52,4 +51,4 @@ void	init_states(t_philo *philo)
 	philo->is_sleeping = 0;
 	philo->has_died = 0;
 	philo->meals_eaten = 0;
-}
+} */

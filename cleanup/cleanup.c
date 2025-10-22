@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:35:56 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/22 23:48:57 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/23 00:25:54 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	cleanup_philos(t_philo **philo, int index)
 			pthread_mutex_destroy(&philo[i]->m_state);
 			pthread_mutex_destroy(&philo[i]->m_meals_eaten);
 			pthread_mutex_destroy(&philo[i]->m_last_meal_time);
+			free(philo[i]);
 		}
 		i++;
 	}

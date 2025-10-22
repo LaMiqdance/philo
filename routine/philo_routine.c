@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 17:48:07 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/22 15:17:59 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/22 23:35:14 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ static void    eat(t_philo *philo)
     time = get_current_time_ms();
     print_status(philo, "is eating", time);
     precise_timing(philo->glb_data->time_to_eat);
+    pthread_mutex_lock(&philo->m_state);
+    philo->is_eating = 0;
+    pthread_mutex_unlock(&philo->m_state);
     release_forks(philo);
 }
 
@@ -125,10 +128,7 @@ void    *philosopher_routine(void *arg)
     {
         eat(philo);
         if (check_simu_stop(philo))
-        {
-            release_forks(philo);
             break;
-        }
         philo_sleep(philo);
         if (check_simu_stop(philo))
             break;

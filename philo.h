@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:04:17 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/22 14:48:27 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/22 23:58:12 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ typedef struct s_philo
 	unsigned long long	last_meal_time;
 	int					has_died;
 
-	pthread_mutex_t		m_state;
+	pthread_mutex_t		*m_state;
+	pthread_mutex_t		*m_last_meal_time;
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		m_meals_eaten;

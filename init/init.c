@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:17:14 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/22 14:29:40 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/22 23:47:18 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ int	init_mutex(t_philo *philo)
 		return (0);
 	if (pthread_mutex_init(&philo->m_meals_eaten, NULL))
 		return (pthread_mutex_destroy(&philo->m_state), 0);
+	if (pthread_mutex_init(&philo->m_last_meal_time, NULL))
+		return (pthread_mutex_destroy(&philo->m_state),
+		pthread_mutex_destroy(&philo->m_meals_eaten), 0);
 	return (1);
 }
 

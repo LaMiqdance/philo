@@ -65,7 +65,7 @@ int	*parse_args(int ac, char **args)
 	int	*tab;
 
 	i = 1;
-	tab = malloc(sizeof(int) * ac - 1);
+	tab = malloc(sizeof(int) * (ac - 1));
 	if (!tab)
 		return (NULL);
 	if (ac == 5 || ac == 6)

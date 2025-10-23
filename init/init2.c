@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:20:10 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/23 23:53:59 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/24 00:12:14 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_philo	*fill_philo_subpart(t_data *data, int i)
 	philo->last_meal_time = get_current_time_ms();
 	philo->left_fork = &data->forks[i];
     philo->right_fork = &data->forks[(i + 1) % data->nb_philo];
-    
+	philo->meals_eaten = 0;
 	return (philo);
 }
 

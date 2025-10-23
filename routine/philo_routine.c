@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 17:48:07 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/24 00:04:20 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/24 00:18:04 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void philo_think(t_philo *philo)
 
     time = get_current_time_ms();
     print_status(philo, "is thinking", time);
-    precise_timing(calculate_thinking_time(philo));
+    precise_timing((int)calculate_thinking_time(philo));
 }
 
 static int     release_forks(t_philo *philo)
@@ -64,6 +64,16 @@ static int     take_forks(t_philo *philo)
     pthread_mutex_t *second_fork;
     unsigned long long time;
     
+    if (philo->left_fork == philo->right_fork)
+    {
+        pthread_mutex_lock(philo->left_fork);
+        time = get_current_time_ms();
+        print_status(philo, "has taken a fork", time);
+        // Wait until death; monitor will detect and stop the simulation
+        precise_timing((int)philo->glb_data->time_to_die);
+        pthread_mutex_unlock(philo->left_fork);
+        return (0);
+    }
     if (philo->left_fork < philo->right_fork)
     {
         first_fork = philo->left_fork;
@@ -93,7 +103,7 @@ static void    philo_sleep(t_philo *philo)
 
     time = get_current_time_ms();
     print_status(philo, "is sleeping", time);
-    precise_timing(philo->glb_data->time_to_sleep);
+    precise_timing((int)philo->glb_data->time_to_sleep);
 }
 
 
@@ -113,7 +123,7 @@ static void    eat(t_philo *philo)
     
     time = get_current_time_ms();
     print_status(philo, "is eating", time);
-    precise_timing(philo->glb_data->time_to_eat);
+    precise_timing((int)philo->glb_data->time_to_eat);
     release_forks(philo);
 }
 

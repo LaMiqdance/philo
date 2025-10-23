@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:08:41 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/23 23:25:23 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/24 00:20:48 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int ac, char **av)
 	// c;eanup_n_exot
 	philo = init_philos(data);
 	if (!philo)
-		return (free(thread_ids), free(data->forks),
+		return (free(thread_ids), cleanup_mutex(data->forks, data->nb_philo),
 			cleanup_data(data), free(data), 1);
 	if (!init_threads(thread_ids, philo))
 		return (final_cleanup(philo, data, thread_ids), 1);

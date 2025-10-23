@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:35:56 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/23 23:38:55 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/23 23:59:45 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	final_cleanup(t_philo **philo, t_data *data, pthread_t *thread_ids)
 	cleanup_philos(philo, data->nb_philo);
 	free(thread_ids);
 	cleanup_mutex(data->forks, data->nb_philo);
-	free(data->forks);
 	cleanup_data(data);
 	free(data);
 }

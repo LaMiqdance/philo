@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 23:14:00 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/23 00:27:40 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/23 23:56:42 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ int check_death(t_philo **philo, int nb_philo)
 
         if (time > philo[i]->glb_data->time_to_die)
         {
+            pthread_mutex_lock(&philo[i]->glb_data->m_print); // pour pas que des choses soient ecrites apres la mort
             pthread_mutex_lock(&philo[i]->glb_data->m_simu_stop);
 			philo[i]->glb_data->simu_stop = 1;
 			pthread_mutex_unlock(&philo[i]->glb_data->m_simu_stop);
 
             time = get_current_time_ms();
-            print_status(philo[i], "has died", time);
+            printf("%llu %d died\n", time - philo[i]->glb_data->start_time, philo[i]->id);
+            pthread_mutex_unlock(&philo[i]->glb_data->m_print);
             return (1);
         }
         i++;

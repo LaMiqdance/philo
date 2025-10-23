@@ -6,29 +6,11 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:17:14 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/23 23:39:20 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/23 23:53:49 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-/* static void	destroy_n_first_mutexes(t_philo *philo, int n)
-{
-    if (n >= 1)
-        pthread_mutex_destroy(&philo->m_has_taken_a_fork);
-    if (n >= 2)
-        pthread_mutex_destroy(&philo->m_is_eating);
-    if (n >= 3)
-        pthread_mutex_destroy(&philo->m_is_thinking);
-    if (n >= 4)
-        pthread_mutex_destroy(&philo->m_is_sleeping);
-    if (n >= 5)
-        pthread_mutex_destroy(&philo->m_has_died);
-    if (n >= 6)
-        pthread_mutex_destroy(&philo->m_last_meal_time);
-    if (n >= 7)
-        pthread_mutex_destroy(&philo->m_meals_eaten);
-} */
 
 int	init_mutex(t_philo *philo)
 {

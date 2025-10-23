@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 17:48:07 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/23 23:32:57 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/23 23:37:36 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,13 @@ static void    eat(t_philo *philo)
     philo->meals_eaten++;
     pthread_mutex_unlock(&philo->m_meals_eaten);
     
-    pthread_mutex_lock(&philo->m_state);
+    pthread_mutex_lock(&philo->m_last_meal_time);
     philo->last_meal_time = get_current_time_ms();
-    pthread_mutex_unlock(&philo->m_state);
+    pthread_mutex_unlock(&philo->m_last_meal_time);
     
     time = get_current_time_ms();
     print_status(philo, "is eating", time);
     precise_timing(philo->glb_data->time_to_eat);
-    pthread_mutex_lock(&philo->m_state);
-    pthread_mutex_unlock(&philo->m_state);
     release_forks(philo);
 }
 

@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 15:04:17 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/23 00:12:48 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/10/23 23:40:32 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_philo
 	int					is_sleeping;
 	int					has_died; */
 
-	pthread_mutex_t		m_state;
 	pthread_mutex_t		m_last_meal_time;
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*left_fork;
@@ -76,7 +75,6 @@ void					precise_timing(int ms);
 // init
 int						init_threads(pthread_t *threads_ids, t_philo **philo);
 int						init_data(t_data *data);
-void					init_states(t_philo *philo);
 int						init_mutex(t_philo *philo);
 pthread_mutex_t			*init_forks(t_data *data);
 t_philo					**init_philos(t_data *data);

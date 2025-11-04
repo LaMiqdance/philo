@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 17:48:07 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/24 00:18:04 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/11/04 08:03:01 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int check_simu_stop(t_philo *philo)
     return (should_stop);
 }
 
-static unsigned long long calculate_thinking_time(t_philo *philo)
+/* static unsigned long long calculate_thinking_time(t_philo *philo)
 {
     unsigned long long base_time = (philo->glb_data->time_to_eat * philo->glb_data->nb_philo) / 8;
     unsigned long long variation = (philo->id * philo->glb_data->time_to_eat) / 20;
     return (base_time + variation);
-}
+} */
 
 static void philo_think(t_philo *philo)
 {
@@ -36,7 +36,7 @@ static void philo_think(t_philo *philo)
 
     time = get_current_time_ms();
     print_status(philo, "is thinking", time);
-    precise_timing((int)calculate_thinking_time(philo));
+    precise_timing(0);
 }
 
 static int     release_forks(t_philo *philo)
@@ -44,7 +44,7 @@ static int     release_forks(t_philo *philo)
     pthread_mutex_t *first_fork;
     pthread_mutex_t *second_fork;
 
-    if (philo->left_fork < philo->right_fork)
+    if (philo->id % 2 == 0)
     {
         first_fork = philo->left_fork;
         second_fork = philo->right_fork;
@@ -74,7 +74,7 @@ static int     take_forks(t_philo *philo)
         pthread_mutex_unlock(philo->left_fork);
         return (0);
     }
-    if (philo->left_fork < philo->right_fork)
+    if (philo->id % 2 == 0)
     {
         first_fork = philo->left_fork;
         second_fork = philo->right_fork;
@@ -132,8 +132,10 @@ void    *philosopher_routine(void *arg)
     t_philo *philo;
     philo = (t_philo *)arg;
     
-    while (!check_simu_stop(philo))
+    while (1)
     {
+        if (philo->id % 2 == 0)
+            usleep(1000);
         eat(philo);
         if (check_simu_stop(philo))
             break;

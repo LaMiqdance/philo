@@ -6,7 +6,7 @@
 /*   By: midiagne <midiagne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 23:14:00 by midiagne          #+#    #+#             */
-/*   Updated: 2025/10/23 23:56:42 by midiagne         ###   ########.fr       */
+/*   Updated: 2025/11/04 07:57:27 by midiagne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void    *monitor_routine(void *arg)
     while (1)
     {
         if (check_death(philo, (*philo)->glb_data->nb_philo)
-        || check_meals_eaten(philo, (*philo)->glb_data->nb_philo))
+            || check_meals_eaten(philo, (*philo)->glb_data->nb_philo))
             return (NULL);
         precise_timing(7);
     }
